@@ -23,17 +23,20 @@ No momento a única maneira de instalar o nosso programa é clonando o repositó
 2. `git clone https://github.com/edu-bm7/packitup`
 3. `cd packitup`
 4. `meson setup builddir`
-    - Se quiser você pode escolher um diretório customizado para instalação, porém, os pacotes de tradução não irão funcionar. 
+    - Caso queira, você pode escolher um diretório customizado para instalação, porém, os pacotes de tradução não irão funcionar. 
     - Se quiser fazê-lo mesmo assim, `meson setup --prefix=SEU_DIRETORIO builddir`
-5. `ninja -C builddir`
-6. `sudo ninja -C builddir install`
+5. `cd builddir`
+    - Mude para o diretório onde será feito a compilação
+6. `ninja`
+7. `sudo ninja install`
 
 ## Desinstalar
 Para desinstalar nosso programa, caso tenha compilado com `ninja` você pode usar o comando:
 ```
 sudo ninja -C builddir uninstall
 ```
-Onde `builddir` é o diretório em que você especificou em `meson setup`
+Onde `builddir` é o diretório em que você especificou em `meson setup`. 
+Você também pode simplesmente `cd builddir`, e `sudo ninja uninstall`. 
 
 
 ## Requisítos para compilação
