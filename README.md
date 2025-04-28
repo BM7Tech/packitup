@@ -14,7 +14,7 @@
 ## KDE Plasma/Kubuntu
 Although the app work in KDE environment, theming it might be tricky and it might contain minor glitches. It doesn't contain LibAdwaita though, making KDE lovers life easier.
 ## GNOME/LibAdwaita
-If you want a more adapt version of the app for the GNOME Desktop Environment(dark theme support, etc), check it out [PackItUP! - GNOME](https://github.com/BM7Tech/packitup-gnome).
+If you want a more adept version of the app for the GNOME Desktop Environment(dark theme support, etc), check it out [PackItUP! - GNOME](https://github.com/BM7Tech/packitup-gnome).
 ## Install
 At the moment the only way to install is by cloning the repository:
 
