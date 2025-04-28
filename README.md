@@ -35,7 +35,7 @@ To uninstall our program, if you have compiled it with `ninja` you can use:
 sudo ninja -C builddir uninstall
 ```
 Where `builddir` is the build directory you specified with `meson setup`.
-You can also just  `cd builddir`, then `sudo ninja uninstall`.
+You can also just `cd builddir`, then `sudo ninja uninstall`.
 
 
 ## Build prerequisites
