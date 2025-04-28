@@ -67,7 +67,7 @@ sudo dnf install -y \
 sudo zypper refresh
 sudo zypper install -y \
   google-noto-fonts \
-  gtk4 gtkmm4 \
+  gtk4 gtkmm4-devel \
   meson ninja curl gcc-c++ pkg-config python3 \
   xdg-desktop-portal xdg-desktop-portal-gtk xdg-utils
 ```
