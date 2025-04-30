@@ -132,3 +132,8 @@ meson.add_install_script(
   'gtk-update-icon-cache',
   '-f', '-t', icons_dir
 )
+
+meson.add_uninstall_script(
+  'gtk-update-icon-cache',
+  '-f', '-t', icons_dir
+)
