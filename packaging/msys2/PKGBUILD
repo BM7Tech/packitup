@@ -1,0 +1,53 @@
+# PackItUP! Never run out of beer again.
+# Copyright (C) 2025  edu-bm7 <edubm7@bm7.tech>
+# 
+# This file is part of PackItUP!.
+# 
+# PackItUP! is free software: you can redistribute it and/or modify it
+# under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# PackItUP! is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with PackItUP!. If not, see <https://www.gnu.org/licenses/>.
+pkgname=packitup
+pkgver=1.0.0
+pkgrel=1
+pkgdesc="PackItUP! Never run out of beer again."
+arch=('x86_64')
+url="https://github.com/BM7Tech/packitup"
+license=('GPL3')
+depends=(
+  mingw-w64-x86_64-gtkmm4
+  mingw-w64-x86_64-glib2
+  mingw-w64-x86_64-giomm
+  mingw-w64-x86_64-intltool
+)
+makedepends=(
+  mingw-w64-x86_64-toolchain
+  meson
+  ninja
+  pkg-config
+  git
+)
+source=("$pkgname-$pkgver.tar.gz::https://github.com/BM7Tech/packitup/archive/v${pkgver}.tar.gz")
+sha256sums=('SKIP')
+
+build() {
+  cd "packitup-${pkgver}"
+  meson setup build \
+    --cross-file=../windows-cross.txt \
+    --prefix="$MINGW_PREFIX"
+  ninja -C build
+}
+
+package() {
+  cd "packitup-${pkgver}"
+  DESTDIR="$pkgdir" ninja -C build install
+}
+
