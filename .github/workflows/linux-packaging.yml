@@ -124,6 +124,7 @@ jobs:
           cat > PackItUP.AppDir/AppRun << 'EOF'
           #!/bin/env bash
           set -eo pipefail
+          
           if [ -z "$APPDIR" ]; then
             SOURCE="${BASH_SOURCE[0]}"
             while [ -h "$SOURCE" ]; do
@@ -132,7 +133,7 @@ jobs:
               [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
             done
             DIR="$(cd -P "$(dirname "$SOURCE")" >/dev/null 2>&1 && pwd)"
-            APPDIR="$(dirname "$DIR")"
+            APPDIR="$DIR"
           fi
 
           export XDG_DATA_DIRS="$APPDIR/usr/share:${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
@@ -141,7 +142,7 @@ jobs:
           export LD_LIBRARY_PATH="$APPDIR/usr/lib${LD_LIBRARY_PATH:+":$LD_LIBRARY_PATH"}"
           export TEXTDOMAINDIR="$APPDIR/usr/share/locale"
 
-          exec "$APPDIR/usr/bin/packitup" "$@"
+          exec "$APPDIR/usr/bin/packitup"
           EOF
           chmod +x PackItUP.AppDir/AppRun
           ./appimagetool.AppImage PackItUP.AppDir \
