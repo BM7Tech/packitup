@@ -33,49 +33,55 @@ resources = gnome.compile_resources('resources',
 
 schemas_file = files('tech.bm7.packitup.gschema.xml')
 install_data(
-  'icons/hicolor/16x16/apps/packitup.png',
+  'icons/hicolor/scalable/apps/tech.bm7.packitup.svg',
+  install_dir: get_option('datadir') / 'icons/hicolor/scalable/apps'
+)
+
+install_data(
+  'icons/hicolor/16x16/apps/tech.bm7.packitup.png',
   install_dir: get_option('datadir') / 'icons/hicolor/16x16/apps'
 )
+
 install_data(
-  'icons/hicolor/22x22/apps/packitup.png',
+  'icons/hicolor/22x22/apps/tech.bm7.packitup.png',
   install_dir: get_option('datadir') / 'icons/hicolor/22x22/apps'
 )
+
 install_data(
-  'icons/hicolor/24x24/apps/packitup.png',
+  'icons/hicolor/24x24/apps/tech.bm7.packitup.png',
   install_dir: get_option('datadir') / 'icons/hicolor/24x24/apps'
 )
+
 install_data(
-  'icons/hicolor/32x32/apps/packitup.png',
+  'icons/hicolor/32x32/apps/tech.bm7.packitup.png',
   install_dir: get_option('datadir') / 'icons/hicolor/32x32/apps'
 )
+
 install_data(
-  'icons/hicolor/64x64/apps/packitup.png',
+  'icons/hicolor/48x48/apps/tech.bm7.packitup.png',
+  install_dir: get_option('datadir') / 'icons/hicolor/48x48/apps'
+)
+
+install_data(
+  'icons/hicolor/64x64/apps/tech.bm7.packitup.png',
   install_dir: get_option('datadir') / 'icons/hicolor/64x64/apps'
 )
+
 install_data(
-  'icons/hicolor/128x128/apps/packitup.png',
+  'icons/hicolor/128x128/apps/tech.bm7.packitup.png',
   install_dir: get_option('datadir') / 'icons/hicolor/128x128/apps'
 )
+
 install_data(
-  'icons/hicolor/256x256/apps/packitup.png',
+  'icons/hicolor/256x256/apps/tech.bm7.packitup.png',
   install_dir: get_option('datadir') / 'icons/hicolor/256x256/apps'
 )
+
 install_data(
-  'icons/hicolor/512x512/apps/packitup.png',
+  'icons/hicolor/512x512/apps/tech.bm7.packitup.png',
   install_dir: get_option('datadir') / 'icons/hicolor/512x512/apps'
 )
-install_data(
-  'icons/hicolor/16x16/actions/window-close.svg',
-  install_dir: get_option('datadir') / 'icons/hicolor/16x16/actions'
-)
-install_data(
-  'icons/hicolor/22x22/actions/window-close.svg',
-  install_dir: get_option('datadir') / 'icons/hicolor/22x22/actions'
-)
-install_data(
-  'icons/hicolor/24x24/actions/window-close.svg',
-  install_dir: get_option('datadir') / 'icons/hicolor/24x24/actions'
-)
+
 schemas = gnome.compile_schemas(depend_files: schemas_file)
 
 meson.add_install_script('glib-compile-schemas', schemas_dir)
@@ -86,6 +92,7 @@ cpp_sources = [
   'packitup_window.cc',
   'packitup_prefs.cc',
 ]
+
 gtkmm_dep = dependency('gtkmm-4.0', version:'>=4.10', required: true)
 glib_dep = dependency('glibmm-2.68')
 gio_dep = dependency('giomm-2.68')

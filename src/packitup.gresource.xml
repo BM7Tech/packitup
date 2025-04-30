@@ -20,10 +20,11 @@ along with PackItUP!. If not, see <https://www.gnu.org/licenses/>.
 -->
 <gresources>
     <gresource prefix="/tech/bm7/packitup/src">
-    <file preprocess="xml-stripblanks">window.ui</file>
-    <file preprocess="xml-stripblanks">gears_menu.ui</file>
-    <file preprocess="xml-stripblanks">prefs.ui</file>
-    <file preprocess="xml-stripblanks">about.ui</file>
-    <file>packitup.png</file>
-  </gresource>
-</gresources>
+	<file preprocess="xml-stripblanks">window.ui</file>
+	<file preprocess="xml-stripblanks">gears_menu.ui</file>
+	<file preprocess="xml-stripblanks">prefs.ui</file>
+	<file preprocess="xml-stripblanks">about.ui</file>
+	<file>tech.bm7.packitup.png</file>
+	<file>tech.bm7.packitup.svg</file>
+    </gresource>
+    </gresources>

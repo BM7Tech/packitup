@@ -22,6 +22,9 @@
 #include "packitup_prefs.h"
 #include "packitup_window.h"
 #include <exception>
+#include <gdkmm/paintable.h>
+#include <gdkmm/pixbuf.h>
+#include <gdkmm/snapshot.h>
 #include <glibmm/i18n.h>
 #include <gtkmm/aboutdialog.h>
 #include <iostream>
@@ -124,7 +127,7 @@ Packitup::on_action_about ()
       dialog->set_program_name ("PackItUP!");
       dialog->set_copyright ("Copyright (C) 2025  edu-bm7 <edubm7@bm7.tech>");
       dialog->set_logo (Gdk::Texture::create_from_resource (
-          "/tech/bm7/packitup/src/packitup.png"));
+          "/tech/bm7/packitup/src/tech.bm7.packitup.svg"));
       dialog->set_license_type (Gtk::License::GPL_3_0);
       dialog->set_wrap_license (true);
       dialog->set_comments (_ ("Never run out of beer again."));

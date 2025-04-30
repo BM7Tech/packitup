@@ -221,10 +221,8 @@ PackitupWindow::PackitupWindow (BaseObjectType *cobject,
 
   // Set the window icon from gresources
   auto icon_theme = Gtk::IconTheme::get_for_display (get_display ());
-  if (icon_theme->has_icon ("packitup"))
-    set_icon_name ("packitup"); // Uses the theme icon
-  else
-    std::cerr << "Icon 'packitup' not found in theme!" << std::endl;
+  icon_theme->add_resource_path ("/tech/bm7/packitup/src");
+  set_icon_name ("tech.bm7.packitup"); // Uses the theme icon
 
   m_refAppCustomCssProvider = Gtk::CssProvider::create ();
   m_refThemeCssProvider = Gtk::CssProvider::create ();
