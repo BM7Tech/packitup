@@ -86,7 +86,7 @@ jobs:
             artifacts/PackItUP-${{ github.ref_name }}.AppImage
 
       - name: Upload Linux artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: linux-binaries
           path: |
