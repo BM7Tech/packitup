@@ -71,6 +71,7 @@ jobs:
           cp src/icons/hicolor/128x128/apps/tech.bm7.packitup.png AppDir/usr/share/icons/hicolor/128x128/apps/tech.bm7.packitup.png
           cp src/icons/hicolor/256x256/apps/tech.bm7.packitup.png AppDir/usr/share/icons/hicolor/256x256/apps/tech.bm7.packitup.png
           cp src/icons/hicolor/512x512/apps/tech.bm7.packitup.png AppDir/usr/share/icons/hicolor/512x512/apps/tech.bm7.packitup.png
+          cp src/icons/hicolor/512x512/apps/tech.bm7.packitup.png AppDir/
           cp src/icons/hicolor/scalable/apps/tech.bm7.packitup.svg AppDir/usr/share/icons/hicolor/scalable/apps/tech.bm7.packitup.svg
           glib-compile-schemas AppDir/usr/share/glib-2.0/schemas
 
