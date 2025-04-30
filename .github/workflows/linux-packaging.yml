@@ -57,6 +57,7 @@ jobs:
           mkdir -p AppDir/usr/share/icons/hicolor/scalable/apps
           cp build/src/packitup AppDir/usr/bin
           cp build/src/packitup.desktop AppDir/usr/share/applications
+          cp build/src/packitup.desktop AppDir/
           cp LICENSE AppDir/usr/share/licenses
           cp build/po/pt_BR/LC_MESSAGES/packitup.mo AppDir/usr/share/locale/pt_BR/LC_MESSAGES
           cp build/po/en_US/LC_MESSAGES/packitup.mo AppDir/usr/share/locale/en_US/LC_MESSAGES
