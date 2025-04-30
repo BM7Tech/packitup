@@ -84,6 +84,9 @@ jobs:
       - name: Build AppImage
         run: |
           mv AppDir PackItUP.AppDir
+          pushd PackItUP.AppDir
+          ln -s usr/bin/packitup AppRun
+          popd
           ./appimagetool.AppImage PackItUP.AppDir \
             artifacts/PackItUP-${{ github.ref_name }}.AppImage
 
