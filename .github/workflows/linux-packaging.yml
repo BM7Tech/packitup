@@ -82,16 +82,41 @@ jobs:
           mkdir -p AppDir/usr/lib
 
           # for each linked .so, copy it (flattened) into AppDir/usr/lib/
-          for lib in $(ldd AppDir/usr/bin/packitup \
-                         | awk '/=> \/.*\.so/ { print $3 }'); do
-            echo "Copying $lib → AppDir/usr/lib/"
-            cp "$lib" AppDir/usr/lib/
-          done
+          ldd AppDir/usr/bin/packitup \
+              | awk '/=> .*\.so/ { print $3 }' \
+              | sort -u \
+              | while read -r lib; do
+                  case "$lib" in
+                    # skip glibc, dynamic loader, pthread, rt, math, dl, gcc_s, stdc++
+                    /lib/*                              | \
+                    /usr/lib*/libc.so.*                | \
+                    /usr/lib*/ld-linux*.so.*           | \
+                    /usr/lib*/libpthread.so.*          | \
+                    /usr/lib*/librt.so.*               | \
+                    /usr/lib*/libm.so.*                | \
+                    /usr/lib*/libdl.so.*               | \
+                    /usr/lib*/libgcc_s.so.*            | \
+                    /usr/lib*/libstdc++.so.*)
+                      echo "Skipping core runtime $lib"
+                      ;;
+                    *)
+                      echo "Copying $lib → AppDir/usr/lib/"
+                      cp "$lib" AppDir/usr/lib/
+                      ;;
+                  esac
+                done
 
       - name: Fix binary RPATH
         run: |
           # so the loader looks in ../lib (i.e. AppDir/usr/lib) first
           patchelf --set-rpath '$ORIGIN/../lib' AppDir/usr/bin/packitup
+
+      - name: Verify RPATH in AppDir binary
+        run: |
+          echo "---- AppDir/usr/bin/packitup RPATH/RUNPATH ----"
+          readelf -d AppDir/usr/bin/packitup \
+            | grep -E '(RPATH|RUNPATH)' \
+            || echo "⚠️  no RPATH/RUNPATH found!"
 
       - name: Download AppImageTool
         run: |
