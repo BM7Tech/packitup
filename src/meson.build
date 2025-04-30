@@ -34,12 +34,12 @@ resources = gnome.compile_resources('resources',
 schemas_file = files('tech.bm7.packitup.gschema.xml')
 install_data(
   'icons/hicolor/scalable/apps/tech.bm7.packitup.svg',
-  install_dir: get_option('datadir') / 'icons/hicolor/scalable/apps'
+  install_dir: get_option('prefix') / get_option('datadir') / 'icons/hicolor/scalable/apps'
 )
 
 install_data(
   'icons/hicolor/16x16/apps/tech.bm7.packitup.png',
-  install_dir: get_option('datadir') / 'icons/hicolor/16x16/apps'
+  install_dir: get_option('prefix') /  get_option('datadir') / 'icons/hicolor/16x16/apps'
 )
 
 install_data(
@@ -49,37 +49,37 @@ install_data(
 
 install_data(
   'icons/hicolor/24x24/apps/tech.bm7.packitup.png',
-  install_dir: get_option('datadir') / 'icons/hicolor/24x24/apps'
+  install_dir: get_option('prefix') /  get_option('datadir') / 'icons/hicolor/24x24/apps'
 )
 
 install_data(
   'icons/hicolor/32x32/apps/tech.bm7.packitup.png',
-  install_dir: get_option('datadir') / 'icons/hicolor/32x32/apps'
+  install_dir: get_option('prefix') / get_option('datadir') / 'icons/hicolor/32x32/apps'
 )
 
 install_data(
   'icons/hicolor/48x48/apps/tech.bm7.packitup.png',
-  install_dir: get_option('datadir') / 'icons/hicolor/48x48/apps'
+  install_dir: get_option('prefix') / get_option('datadir') / 'icons/hicolor/48x48/apps'
 )
 
 install_data(
   'icons/hicolor/64x64/apps/tech.bm7.packitup.png',
-  install_dir: get_option('datadir') / 'icons/hicolor/64x64/apps'
+  install_dir: get_option('prefix') / get_option('datadir') / 'icons/hicolor/64x64/apps'
 )
 
 install_data(
   'icons/hicolor/128x128/apps/tech.bm7.packitup.png',
-  install_dir: get_option('datadir') / 'icons/hicolor/128x128/apps'
+  install_dir: get_option('prefix') / get_option('datadir') / 'icons/hicolor/128x128/apps'
 )
 
 install_data(
   'icons/hicolor/256x256/apps/tech.bm7.packitup.png',
-  install_dir: get_option('datadir') / 'icons/hicolor/256x256/apps'
+  install_dir: get_option('prefix') / get_option('datadir') / 'icons/hicolor/256x256/apps'
 )
 
 install_data(
   'icons/hicolor/512x512/apps/tech.bm7.packitup.png',
-  install_dir: get_option('datadir') / 'icons/hicolor/512x512/apps'
+  install_dir: get_option('prefix') / get_option('datadir') / 'icons/hicolor/512x512/apps'
 )
 
 schemas = gnome.compile_schemas(depend_files: schemas_file)
