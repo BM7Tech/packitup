@@ -44,38 +44,44 @@ jobs:
           meson setup build --prefix=/usr
           ninja -C build
 
+      - name: Install Source files into DESTDIR
+        run: |
+          rm -rf AppDir
+          mkdir AppDir
+          ninja -C build install --destdir="$PWD/Appdir"
+
       - name: Create source tarball
         run: |
           mkdir -p artifacts
           tar czf artifacts/packitup-${{ github.ref_name }}.tar.gz \
-            -C build .
+            -C AppDir .
 
       - name: Prepare AppDir
         run: |
-          rm -rf AppDir
-          mkdir -p AppDir/usr/bin AppDir/usr/share/{applications,icons/hicolor,locale/pt_BR/LC_MESSAGES,locale/en_US/LC_MESSAGES} AppDir/usr/share/licenses AppDir/usr/share/glib-2.0/schemas
-          mkdir -p AppDir/usr/share/icons/hicolor/{16x16,22x22,24x24,32x32,48x48,64x64,128x128,256x256,512x512}/apps
-          mkdir -p AppDir/usr/share/icons/hicolor/scalable/apps
-          cp build/src/packitup AppDir/usr/bin
-          cp build/src/packitup.desktop AppDir/usr/share/applications
-          cp build/src/packitup.desktop AppDir/
-          cp LICENSE AppDir/usr/share/licenses
-          cp build/po/pt_BR/LC_MESSAGES/packitup.mo AppDir/usr/share/locale/pt_BR/LC_MESSAGES
-          cp build/po/en_US/LC_MESSAGES/packitup.mo AppDir/usr/share/locale/en_US/LC_MESSAGES
-          cp src/tech.bm7.packitup.gschema.xml AppDir/usr/share/glib-2.0/schemas
-          cp src/icons/hicolor/16x16/apps/tech.bm7.packitup.png AppDir/usr/share/icons/hicolor/16x16/apps/tech.bm7.packitup.png
-          cp src/icons/hicolor/22x22/apps/tech.bm7.packitup.png AppDir/usr/share/icons/hicolor/22x22/apps/tech.bm7.packitup.png
-          cp src/icons/hicolor/24x24/apps/tech.bm7.packitup.png AppDir/usr/share/icons/hicolor/24x24/apps/tech.bm7.packitup.png
-          cp src/icons/hicolor/32x32/apps/tech.bm7.packitup.png AppDir/usr/share/icons/hicolor/32x32/apps/tech.bm7.packitup.png
-          cp src/icons/hicolor/48x48/apps/tech.bm7.packitup.png AppDir/usr/share/icons/hicolor/48x48/apps/tech.bm7.packitup.png
-          cp src/icons/hicolor/64x64/apps/tech.bm7.packitup.png AppDir/usr/share/icons/hicolor/64x64/apps/tech.bm7.packitup.png
-          cp src/icons/hicolor/128x128/apps/tech.bm7.packitup.png AppDir/usr/share/icons/hicolor/128x128/apps/tech.bm7.packitup.png
-          cp src/icons/hicolor/256x256/apps/tech.bm7.packitup.png AppDir/usr/share/icons/hicolor/256x256/apps/tech.bm7.packitup.png
-          cp src/icons/hicolor/512x512/apps/tech.bm7.packitup.png AppDir/usr/share/icons/hicolor/512x512/apps/tech.bm7.packitup.png
+          #mkdir -p AppDir/usr/bin AppDir/usr/share/{applications,icons/hicolor,locale/pt_BR/LC_MESSAGES,locale/en_US/LC_MESSAGES} AppDir/usr/share/licenses AppDir/usr/share/glib-2.0/schemas
+          #mkdir -p AppDir/usr/share/icons/hicolor/{16x16,22x22,24x24,32x32,48x48,64x64,128x128,256x256,512x512}/apps
+          #mkdir -p AppDir/usr/share/icons/hicolor/scalable/apps
+          #cp build/src/packitup AppDir/usr/bin
+          #cp build/src/packitup.desktop AppDir/usr/share/applications
+          #cp build/src/packitup.desktop AppDir/
+          #cp LICENSE AppDir/usr/share/licenses
+          #cp build/po/pt_BR/LC_MESSAGES/packitup.mo AppDir/usr/share/locale/pt_BR/LC_MESSAGES
+          #cp build/po/en_US/LC_MESSAGES/packitup.mo AppDir/usr/share/locale/en_US/LC_MESSAGES
+          #cp src/tech.bm7.packitup.gschema.xml AppDir/usr/share/glib-2.0/schemas
+          #cp src/icons/hicolor/16x16/apps/tech.bm7.packitup.png AppDir/usr/share/icons/hicolor/16x16/apps/tech.bm7.packitup.png
+          #cp src/icons/hicolor/22x22/apps/tech.bm7.packitup.png AppDir/usr/share/icons/hicolor/22x22/apps/tech.bm7.packitup.png
+          #cp src/icons/hicolor/24x24/apps/tech.bm7.packitup.png AppDir/usr/share/icons/hicolor/24x24/apps/tech.bm7.packitup.png
+          #cp src/icons/hicolor/32x32/apps/tech.bm7.packitup.png AppDir/usr/share/icons/hicolor/32x32/apps/tech.bm7.packitup.png
+          #cp src/icons/hicolor/48x48/apps/tech.bm7.packitup.png AppDir/usr/share/icons/hicolor/48x48/apps/tech.bm7.packitup.png
+          #cp src/icons/hicolor/64x64/apps/tech.bm7.packitup.png AppDir/usr/share/icons/hicolor/64x64/apps/tech.bm7.packitup.png
+          #cp src/icons/hicolor/128x128/apps/tech.bm7.packitup.png AppDir/usr/share/icons/hicolor/128x128/apps/tech.bm7.packitup.png
+          #cp src/icons/hicolor/256x256/apps/tech.bm7.packitup.png AppDir/usr/share/icons/hicolor/256x256/apps/tech.bm7.packitup.png
+          #cp src/icons/hicolor/512x512/apps/tech.bm7.packitup.png AppDir/usr/share/icons/hicolor/512x512/apps/tech.bm7.packitup.png
           cp src/icons/hicolor/512x512/apps/tech.bm7.packitup.png AppDir/
-          cp src/icons/hicolor/scalable/apps/tech.bm7.packitup.svg AppDir/usr/share/icons/hicolor/scalable/apps/tech.bm7.packitup.svg
-          glib-compile-schemas AppDir/usr/share/glib-2.0/schemas
-          gtk-update-icon-cache -f -t AppDir/usr/share/icons/hicolor
+          cp src/icons/hicolor/scalable/apps/tech.bm7.packitup.svg AppDir/tech.bm7.packitup.svg
+          #cp src/icons/hicolor/scalable/apps/tech.bm7.packitup.svg AppDir/usr/share/icons/hicolor/scalable/apps/tech.bm7.packitup.svg
+          #glib-compile-schemas AppDir/usr/share/glib-2.0/schemas
+          #gtk-update-icon-cache -f -t AppDir/usr/share/icons/hicolor
       
       - name: Bundle shared libraries (flattened)
         run: |
