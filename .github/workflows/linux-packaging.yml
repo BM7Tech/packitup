@@ -27,6 +27,7 @@ jobs:
             libglib2.0-dev libgtk-4-dev libgtkmm-4.0-dev \
             wget unzip \
             libfuse2t64 \
+            patchelf \
             libgtk-4-1 libgtkmm-4.0-0 \
             xdg-desktop-portal xdg-desktop-portal-gtk xdg-utils \
           
@@ -74,6 +75,23 @@ jobs:
           cp src/icons/hicolor/512x512/apps/tech.bm7.packitup.png AppDir/
           cp src/icons/hicolor/scalable/apps/tech.bm7.packitup.svg AppDir/usr/share/icons/hicolor/scalable/apps/tech.bm7.packitup.svg
           glib-compile-schemas AppDir/usr/share/glib-2.0/schemas
+      
+      - name: Bundle shared libraries (flattened)
+        run: |
+          # ensure our target exists
+          mkdir -p AppDir/usr/lib
+
+          # for each linked .so, copy it (flattened) into AppDir/usr/lib/
+          for lib in $(ldd AppDir/usr/bin/packitup \
+                         | awk '/=> \/.*\.so/ { print $3 }'); do
+            echo "Copying $lib → AppDir/usr/lib/"
+            cp "$lib" AppDir/usr/lib/
+          done
+
+      - name: Fix binary RPATH
+        run: |
+          # so the loader looks in ../lib (i.e. AppDir/usr/lib) first
+          patchelf --set-rpath '$ORIGIN/../lib' AppDir/usr/bin/packitup
 
       - name: Download AppImageTool
         run: |
@@ -84,9 +102,29 @@ jobs:
       - name: Build AppImage
         run: |
           mv AppDir PackItUP.AppDir
-          pushd PackItUP.AppDir
-          ln -s usr/bin/packitup AppRun
-          popd
+          cat > PackItUP.AppDir/AppRun << 'EOF'
+          #!/bin/env bash
+          set -eo pipefail
+          if [ -z "$APPDIR" ]; then
+            SOURCE="${BASH_SOURCE[0]}"
+            while [ -h "$SOURCE" ]; do
+              DIR="$(cd -P "$(dirname "$SOURCE")" >/dev/null 2>&1 && pwd)"
+              SOURCE="$(readlink "$SOURCE")"
+              [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+            done
+            DIR="$(cd -P "$(dirname "$SOURCE")" >/dev/null 2>&1 && pwd)"
+            APPDIR="$(dirname "$DIR")"
+          fi
+
+          export XDG_DATA_DIRS="$APPDIR/usr/share${XDG_DATA_DIRS:+":$XDG_DATA_DIRS"}"
+          export GSETTINGS_SCHEMA_DIR="$APPDIR/usr/share/glib-2.0/schemas"
+
+          export LD_LIBRARY_PATH="$APPDIR/usr/lib${LD_LIBRARY_PATH:+":$LD_LIBRARY_PATH"}"
+          export TEXTDOMAINDIR="$APPDIR/usr/share/locale"
+
+          exec "$APPDIR/usr/bin/packitup" "$@"
+          EOF
+          chmod +x PackItUP.AppDir/AppRun
           ./appimagetool.AppImage PackItUP.AppDir \
             artifacts/PackItUP-${{ github.ref_name }}.AppImage
 
