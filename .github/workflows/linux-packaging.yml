@@ -75,6 +75,7 @@ jobs:
           cp src/icons/hicolor/512x512/apps/tech.bm7.packitup.png AppDir/
           cp src/icons/hicolor/scalable/apps/tech.bm7.packitup.svg AppDir/usr/share/icons/hicolor/scalable/apps/tech.bm7.packitup.svg
           glib-compile-schemas AppDir/usr/share/glib-2.0/schemas
+          gtk-update-icon-cache -f -t usr/share/icons/hicolor
       
       - name: Bundle shared libraries (flattened)
         run: |
@@ -111,13 +112,6 @@ jobs:
           # so the loader looks in ../lib (i.e. AppDir/usr/lib) first
           patchelf --set-rpath '$ORIGIN/../lib' AppDir/usr/bin/packitup
 
-      - name: Verify RPATH in AppDir binary
-        run: |
-          echo "---- AppDir/usr/bin/packitup RPATH/RUNPATH ----"
-          readelf -d AppDir/usr/bin/packitup \
-            | grep -E '(RPATH|RUNPATH)' \
-            || echo "⚠️  no RPATH/RUNPATH found!"
-
       - name: Download AppImageTool
         run: |
           wget -qO appimagetool.AppImage \
@@ -141,7 +135,7 @@ jobs:
             APPDIR="$(dirname "$DIR")"
           fi
 
-          export XDG_DATA_DIRS="$APPDIR/usr/share${XDG_DATA_DIRS:+":$XDG_DATA_DIRS"}"
+          export XDG_DATA_DIRS="$APPDIR/usr/share:${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
           export GSETTINGS_SCHEMA_DIR="$APPDIR/usr/share/glib-2.0/schemas"
 
           export LD_LIBRARY_PATH="$APPDIR/usr/lib${LD_LIBRARY_PATH:+":$LD_LIBRARY_PATH"}"
