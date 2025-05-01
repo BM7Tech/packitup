@@ -20,13 +20,22 @@
 
 #include "packitup.h"
 #include <glibmm/i18n.h>
-
+#include <glibmm/miscutils.h>
 int
 main (int argc, char *argv[])
 {
-  // Localized text
+  // Localized text with AppImage relative path support
   setlocale (LC_ALL, "");
-  bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
+  bool found = false;
+  auto txtdir = Glib::getenv ("TEXTDOMAINDIR", found);
+  if (!found && txtdir.empty ())
+    {
+      bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
+    }
+  else
+    {
+      bindtextdomain (GETTEXT_PACKAGE, txtdir.c_str ());
+    }
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
   textdomain (GETTEXT_PACKAGE);
 
