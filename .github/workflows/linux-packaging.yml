@@ -48,7 +48,7 @@ jobs:
         run: |
           rm -rf AppDir
           mkdir AppDir
-          sudo meson install -C build --destdir "$PWD/AppDir"
+          meson install -C build --destdir "$PWD/AppDir"
           cp src/icons/hicolor/512x512/apps/tech.bm7.packitup.png AppDir/
           cp src/icons/hicolor/scalable/apps/tech.bm7.packitup.svg AppDir/tech.bm7.packitup.svg
 

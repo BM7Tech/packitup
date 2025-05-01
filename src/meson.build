@@ -89,7 +89,10 @@ install_data(
 
 schemas = gnome.compile_schemas(depend_files: schemas_file)
 
-meson.add_install_script('glib-compile-schemas', schemas_dir)
+gnome.post_install(
+  glib_compile_schemas: true,
+  gtk_update_icon_cache: true
+)
 
 cpp_sources = [
   'main.cc',
@@ -130,10 +133,4 @@ apps_dir = get_option('prefix') / get_option('datadir') / 'applications'
 install_data(
   desktop_file,
   install_dir: apps_dir
-)
-
-icons_dir = get_option('prefix') / get_option('datadir') / 'icons' / 'hicolor'
-meson.add_install_script(
-  'gtk-update-icon-cache',
-  '-f', '-t', icons_dir
 )
