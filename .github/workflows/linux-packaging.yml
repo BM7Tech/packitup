@@ -64,47 +64,22 @@ jobs:
           cp src/icons/hicolor/scalable/apps/tech.bm7.packitup.svg AppDir/tech.bm7.packitup.svg
           cp build/src/packitup.desktop AppDir/
 
-      - name: Bundle shared libraries (flattened)
+      - name: Run linuxdeploy to bundle shared libraries (.so files)
         run: |
           # ensure our target exists
-          mkdir -p AppDir/usr/lib
+          wget -O linuxdeploy-x86_64.AppImage https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
+          chmod +x linuxdeploy-x86_64.AppImage
 
-          # for each linked .so, copy it (flattened) into AppDir/usr/lib/
-          ldd AppDir/usr/bin/packitup \
-              | awk '/=> .*\.so/ { print $3 }' \
-              | sort -u \
-              | while read -r lib; do
-                  case "$lib" in
-                    # skip glibc, dynamic loader, pthread, rt, math, dl, gcc_s, stdc++
-                    /lib*/libc.so.*                | \
-                    /lib*/ld-linux*.so.*           | \
-                    /lib*/libstdc++.so.*           | \
-                    /lib*/libpthread.so.*          | \
-                    /lib*/librt.so.*               | \
-                    /lib*/libm.so.*                | \
-                    /lib*/libdl.so.*               | \
-                    /lib*/libgcc_s.so.*            | \
-                    /usr/lib*/libc.so.*                | \
-                    /usr/lib*/ld-linux*.so.*           | \
-                    /usr/lib*/libpthread.so.*          | \
-                    /usr/lib*/librt.so.*               | \
-                    /usr/lib*/libm.so.*                | \
-                    /usr/lib*/libdl.so.*               | \
-                    /usr/lib*/libgcc_s.so.*            | \
-                    /usr/lib*/libstdc++.so.*)
-                      echo "Skipping core runtime $lib"
-                      ;;
-                    *)
-                      echo "Copying $lib → AppDir/usr/lib/"
-                      cp "$lib" AppDir/usr/lib/
-                      ;;
-                  esac
-                done
+          ./linuxdeploy-x86_64.AppImage \
+            --appdir AppDir \
+            --executable AppDir/usr/bin/packitup \
+            --output none
 
-      - name: Fix binary RPATH
-        run: |
+      #- name: Fix binary RPATH
+      #  run: |
           # so the loader looks in ../lib (i.e. AppDir/usr/lib) first
-          patchelf --set-rpath '$ORIGIN/../lib' AppDir/usr/bin/packitup
+          # Using linuxdeploy, not needed now
+          #patchelf --set-rpath '$ORIGIN/../lib' AppDir/usr/bin/packitup
 
       - name: Download AppImageTool
         run: |
