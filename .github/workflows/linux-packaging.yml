@@ -48,7 +48,7 @@ jobs:
         run: |
           rm -rf AppDir
           mkdir AppDir
-          ninja -C build install --destdir="$PWD/Appdir"
+          ninja -C build install --destdir=Appdir
 
       - name: Create source tarball
         run: |
