@@ -76,7 +76,14 @@ jobs:
               | while read -r lib; do
                   case "$lib" in
                     # skip glibc, dynamic loader, pthread, rt, math, dl, gcc_s, stdc++
-                    /lib/*                              | \
+                    /lib*/libc.so.*                | \
+                    /lib*/ld-linux*.so.*           | \
+                    /lib*/libstdc++.so.*           | \
+                    /lib*/libpthread.so.*          | \
+                    /lib*/librt.so.*               | \
+                    /lib*/libm.so.*                | \
+                    /lib*/libdl.so.*               | \
+                    /lib*/libgcc_s.so.*            | \
                     /usr/lib*/libc.so.*                | \
                     /usr/lib*/ld-linux*.so.*           | \
                     /usr/lib*/libpthread.so.*          | \
