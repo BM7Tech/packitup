@@ -25,8 +25,9 @@ project('packitup', 'c', 'cpp',
 )
 install_data(
   'LICENSE',
-  install_dir: get_option('datadir') / 'licenses' / meson.project_name()
+  install_dir: get_option('prefix') / get_option('datadir') / 'licenses' / meson.project_name()
 )
+
 subdir('po')
 subdir('src')
 

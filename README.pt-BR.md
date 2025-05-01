@@ -31,13 +31,21 @@ No momento a única maneira de instalar o nosso programa é clonando o repositó
 7. `sudo ninja install`
 
 ## Desinstalar
-Para desinstalar nosso programa, caso tenha compilado com `ninja` você pode usar o comando:
+Para desinstalar nosso programa temos um pequeno script `uninstall.sh` que cuida
+de todo o processo. Nosso script recebe 2 argumentos `--build` ou `-b`, e `--prefix` ou
+`-p`. O argumento `--prefix` é opicional, só o utilize caso sua instalação do PackItUP!
+não estaja em seu PATH(você utilizou --prefix quando configurou o meson e esse prefixo não
+existe no seu PATH). O argumento `--build` recebe o caminho para a sua pasta de compilação
+(`builddir` no nosso exemplo), o caminho é relativo ao local em que você está 
+executando `uninstall.sh`.
+Para desinstalar simplesmente execute:
 ```
-sudo ninja -C builddir uninstall
+sudo ./uninstall.sh --build builddir
 ```
 Onde `builddir` é o diretório em que você especificou em `meson setup`. 
-Você também pode simplesmente `cd builddir`, e `sudo ninja uninstall`. 
-
+Você também pode simplesmente `cd builddir`, e `sudo ninja uninstall`, porém
+não se esqueça de atualizar seu cache dos ícones Gtk para a pasta correta em que
+os ícones do nosso aplicativo foi instalado.
 
 ## Requisítos para compilação
 

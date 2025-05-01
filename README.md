@@ -30,13 +30,20 @@ At the moment the only way to install is by cloning the repository:
 7. `sudo ninja install`
 
 ## Uninstall
-To uninstall our program, if you have compiled it with `ninja` you can use:
+To uninstall our program we have a small `uninstall.sh` script that take cares of
+everything. Note that our script takes 2 arguments `--build` or `-b` and 
+`--prefix` or `-p`. The `--prefix` argument is optional, only use it if your PackItUP!
+installation isn't in your PATH(you used --prefix in meson setup and this prefix
+ins't in your PATH). The `--build` argument takes your build folder path(`builddir` in
+our example), relative to where you are launching `uninstall.sh`.
+To uninstall just run:
 ```
-sudo ninja -C builddir uninstall
+sudo ./uninstall.sh --build builddir
 ```
 Where `builddir` is the build directory you specified with `meson setup`.
-You can also just `cd builddir`, then `sudo ninja uninstall`.
-
+You can also just `cd builddir`, then `sudo ninja uninstall` but don't forget to
+update your Gtk icons cache for the correct folder where our application icons were
+installed.
 
 ## Build prerequisites
 
