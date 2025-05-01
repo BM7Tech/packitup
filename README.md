@@ -96,10 +96,10 @@ sudo pacman -Syu --needed \
 ### Alpine Linux
 ```
 apk add \
-    font-noto-all
-    build-base pkgconf meson ninja-build python3 curl \
-    gtk4.0 gtk4.0-dev \
-    xdg-desktop-portal xdg-desktop-portal-gtk xdg-utils
+  font-noto-all
+  build-base pkgconf meson ninja-build python3 curl \
+  gtk4.0 gtk4.0-dev \
+  xdg-desktop-portal xdg-desktop-portal-gtk xdg-utils
 ```
 
 ### Void Linux
