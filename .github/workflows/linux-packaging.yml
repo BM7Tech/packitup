@@ -47,7 +47,7 @@ jobs:
       - name: Install Source files into DESTDIR
         run: |
           rm -rf AppDir
-          mkdir AppDir
+          mkdir -p AppDir
           ninja -C build install --destdir=Appdir
 
       - name: Create source tarball
