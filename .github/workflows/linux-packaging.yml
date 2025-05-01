@@ -61,9 +61,7 @@ jobs:
       - name: Prepare AppDir
         run: |
           cp src/icons/hicolor/512x512/apps/tech.bm7.packitup.png AppDir/
-          cp src/icons/hicolor/scalable/apps/tech.bm7.packitup.svg AppDir/tech.bm7.packitup.svg
-          cp build/src/packitup.desktop AppDir/
-
+  
       - name: Create AppRun
         run: |
           cat > AppDir/AppRun << 'EOF'
@@ -89,7 +87,7 @@ jobs:
 
           exec "$APPDIR/usr/bin/packitup"
           EOF
-          chmod +x PackItUP.AppDir/AppRun
+          chmod +x AppDir/AppRun
 
       - name: Run linuxdeploy to bundle shared libraries (.so files)
         run: |
@@ -97,21 +95,10 @@ jobs:
           wget -O linuxdeploy-x86_64.AppImage https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
           chmod +x linuxdeploy-x86_64.AppImage
 
-          ./linuxdeploy-x86_64.AppImage \
+          NO_STRIP=1 ./linuxdeploy-x86_64.AppImage \
             --appdir AppDir \
             --executable AppDir/usr/bin/packitup \
-            --output none \
-            --no-desktop-file \
-            --no-icons \
-            --no-copyright \
-            --no-strip
-
-      #- name: Fix binary RPATH
-      #  run: |
-          # so the loader looks in ../lib (i.e. AppDir/usr/lib) first
-          # Using linuxdeploy, not needed now
-          #patchelf --set-rpath '$ORIGIN/../lib' AppDir/usr/bin/packitup
-
+          
       - name: Download AppImageTool
         run: |
           wget -qO appimagetool.AppImage \
