@@ -102,7 +102,7 @@ jobs:
           wget -O linuxdeploy-x86_64.AppImage https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
           wget -c https://raw.githubusercontent.com/linuxdeploy/linuxdeploy-plugin-gtk/master/linuxdeploy-plugin-gtk.sh
           chmod +x linuxdeploy-x86_64.AppImage
-          chmod +x linuxdeploy-plugin-gtk
+          chmod +x linuxdeploy-plugin-gtk.sh
 
           NO_STRIP=1 DEPLOY_GTK_VERSION=4 LDAI_OUTPUT="PackItUP.AppImage" ./linuxdeploy-x86_64.AppImage \
             --appdir AppDir \
