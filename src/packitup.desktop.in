@@ -22,5 +22,5 @@ GenericName=PackItUP!
 Comment=Never run out of beer again.
 Icon=tech.bm7.packitup
 StartupNotify=true
-Exec=@bindir@/packitup %U
+Exec=@BINARY_NAME@
 Categories=GNOME;GTK;Utility

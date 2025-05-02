@@ -118,10 +118,10 @@ executable(program_name,
   install: true
 )
 
-bin_dir = get_option('prefix') / get_option('bindir')
-
+#bin_dir = get_option('prefix') / get_option('bindir')
+bin_name = 'packitup'
 conf_data = configuration_data()
-conf_data.set('bindir', bin_dir)
+conf_data.set('BINARY_NAME', bin_name)
 desktop_file = configure_file(
   input: 'packitup.desktop.in',
   output: '@BASENAME@',
