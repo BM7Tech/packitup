@@ -30,6 +30,7 @@ jobs:
             gettext pkgconf \
             xdg-desktop-portal xdg-desktop-portal-gtk xdg-utils \
             git \
+            fuse2 \
             binutils desktop-file-utils fakeroot gdk-pixbuf2 patchelf \
             python-pip python-setuptools squashfs-tools strace wget zsync
 
