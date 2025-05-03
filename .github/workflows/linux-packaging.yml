@@ -62,7 +62,7 @@ jobs:
           wget -c "https://github.com/darealshinji/linuxdeploy-plugin-checkrt/releases/download/continuous/linuxdeploy-plugin-checkrt.sh"
           wget -c "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage"
            wget -c "https://raw.githubusercontent.com/linuxdeploy/linuxdeploy-plugin-gtk/master/linuxdeploy-plugin-gtk.sh"
-          chmod a+x linuxdeploy-x86_64.AppImage linuxdeploy-plugin-checkrt.sh linuxdeploy-plugin-gtk
+          chmod a+x linuxdeploy-x86_64.AppImage linuxdeploy-plugin-checkrt.sh linuxdeploy-plugin-gtk.sh
           cp /usr/share/glib-2.0/schemas/* AppDir/usr/share/glib-2.0/schemas
           glib-compile-schemas AppDir/usr/share/glib-2.0/schemas
           cp AppDir/usr/share/applications/packitup.desktop AppDir/
