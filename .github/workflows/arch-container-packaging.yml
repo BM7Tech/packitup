@@ -29,8 +29,10 @@ jobs:
             meson ninja gtk4 gtkmm-4.0 \
             gettext pkgconf \
             xdg-desktop-portal xdg-desktop-portal-gtk xdg-utils \
-            git fakeroot \
-            patchelf
+            git \
+            binutils desktop-file-utils fakeroot gdk-pixbuf2 patchelf \
+            python-pip python-setuptools squashfs-tools strace wget zsync
+
       - name: Setup builder environment
         run: |
           useradd -m builder
