@@ -25,12 +25,10 @@ jobs:
           pacman -Syu --noconfirm \
             base-devel \
             python \
-            libxml gettext \
+            libxml2 gettext \
             meson ninja gtk4 gtkmm-4.0 \
             gettext pkgconf \
             xdg-desktop-portal xdg-desktop-portal-gtk xdg-utils \
-            appimage-builder \
-            appimagetool \
             git fakeroot \
             patchelf
       - name: Setup builder environment
