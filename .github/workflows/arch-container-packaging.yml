@@ -42,7 +42,7 @@ jobs:
             cd appimage-builder
             makepkg --noconfirm --syncdeps
           '
-          pacman -U --noconfirm /home/builder/appimage-builder/appimage-builder-bin/*.pkg.tar.zst
+          pacman -U --noconfirm /home/builder/appimage-builder/*.pkg.tar.zst
       - name: Configure & build with Meson
         run: |
           meson setup build --prefix=/usr
