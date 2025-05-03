@@ -1,0 +1,71 @@
+name: Build PackItUP AppImage
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    # run *all* the steps inside an Arch Linux container
+    container:
+      image: archlinux:latest
+      # if you need fuse inside the container:
+      options: --privileged
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Sync Arch keyring & install deps
+        run: |
+          pacman -Sy --noconfirm archlinux-keyring
+          pacman -Syu --noconfirm \
+            base-devel \
+            python \
+            libxml gettext \
+            meson ninja gtk4 gtkmm-4.0 \
+            gettext pkgconf \
+            xdg-desktop-portal xdg-desktop-portal-gtk xdg-utils \
+            appimage-builder \
+            appimagetool \
+            git fakeroot \
+            patchelf
+      - name: Setup builder environment
+        run: |
+          useradd -m builder
+          runuser -l builder -c '
+            cd
+            git clone https://aur.archlinux.org/appimage-builder-bin.git appimage-builder
+            cd appimage-builder
+            makepkg --noconfirm --syncdeps
+          '
+          pacman -U --noconfirm /home/builder/appimage-builder-bin/*.pkg.tar.zst
+      - name: Configure & build with Meson
+        run: |
+          meson setup build --prefix=/usr
+          meson compile -C build
+          rm -rf AppDir
+          meson install -C build --destdir="$PWD/AppDir"
+
+      - name: Post-install fixes
+        run: |
+          glib-compile-schemas  AppDir/usr/share/glib-2.0/schemas
+          gtk-update-icon-cache -f -t AppDir/usr/share/icons/hicolor
+
+      - name: Preparing artifacts directory
+        run: |
+          mkdir -p artifacts
+
+      - name: Bundle into AppImage
+        run: |
+          appimage-builder --recipe "$PWD"/AppImageBuilder.yml --skip-tests
+          mv PackItUP*.AppImage artifacts/PackItUP-${{ github.ref_name }}.AppImage
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: PackItUP-AppImage
+          path: artifacts/PackItUP-${{ github.ref_name }}.AppImage
+
