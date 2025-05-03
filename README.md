@@ -89,7 +89,7 @@ sudo pacman -Syu --needed \
   noto-fonts \
   base-devel meson ninja curl pkgconf python \
   gtk4 gtkmm-4.0 \
-  libxml gettext \
+  libxml2 gettext \
   xdg-desktop-portal xdg-desktop-portal-gtk xdg-utils
 ```
 
