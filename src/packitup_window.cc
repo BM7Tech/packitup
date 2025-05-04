@@ -206,7 +206,7 @@ PackitupWindow::PackitupWindow (BaseObjectType *cobject,
   m_refSettings->bind ("font", m_refTagFont->property_font ());
 
   m_refBuffer->set_text (_ ("Select the values above and click \"Calculate\" "
-                            "to begin...\n\n\n\n\n"));
+                            "to begin..."));
   m_refBuffer->apply_tag (m_refTagFont, m_refBuffer->begin (),
                           m_refBuffer->end ());
   m_revealer.property_child_revealed ().signal_changed ().connect (
