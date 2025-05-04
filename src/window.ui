@@ -23,7 +23,7 @@ along with PackItUP!. If not, see <https://www.gnu.org/licenses/>.
   <object class="GtkApplicationWindow" id="app_window">
     <property name="title" translatable="yes">Pack It UP!</property>
     <property name="default-width">600</property>
-    <property name="default-height">800</property>
+    <!--<property name="default-height">800</property>-->
     <property name="hide-on-close">True</property>
     <child type="titlebar">
       <object class="GtkHeaderBar" id="header">

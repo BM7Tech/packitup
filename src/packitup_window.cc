@@ -19,6 +19,7 @@
  * */
 
 #include "packitup_window.h"
+#include "gtkmm/requisition.h"
 #include "packitup.h"
 #include <glib/gi18n.h>
 #include <glibmm/i18n.h>
@@ -69,13 +70,17 @@ PackitupWindow::PackitupWindow (BaseObjectType *cobject,
   if (!applicationBoxLayout)
     throw std::runtime_error (
         "no \"application_box_layout\" object in window.ui");
-  auto app_scrooledWindow = Gtk::make_managed<Gtk::ScrolledWindow> ();
-  app_scrooledWindow->set_policy (Gtk::PolicyType::AUTOMATIC,
+  auto app_scrolledWindow = Gtk::make_managed<Gtk::ScrolledWindow> ();
+  app_scrolledWindow->set_policy (Gtk::PolicyType::AUTOMATIC,
                                   Gtk::PolicyType::AUTOMATIC);
-  app_scrooledWindow->set_expand ();
+  app_scrolledWindow->set_expand ();
 
-  set_child (*app_scrooledWindow);
-  app_scrooledWindow->set_child (*applicationBoxLayout);
+  set_child (*app_scrolledWindow);
+  app_scrolledWindow->set_child (*applicationBoxLayout);
+  app_scrolledWindow->set_propagate_natural_width (true);
+  app_scrolledWindow->set_propagate_natural_height (true);
+
+  app_scrolledWindow->set_min_content_height (700);
 
   m_unitDropDown = m_refBuilder->get_widget<Gtk::DropDown> ("unit_dropdown");
   if (!m_unitDropDown)
@@ -200,8 +205,8 @@ PackitupWindow::PackitupWindow (BaseObjectType *cobject,
   m_refTagFont = m_refBuffer->create_tag ();
   m_refSettings->bind ("font", m_refTagFont->property_font ());
 
-  m_refBuffer->set_text (
-      _ ("Select the values above and click \"Calculate\" to begin..."));
+  m_refBuffer->set_text (_ ("Select the values above and click \"Calculate\" "
+                            "to begin...\n\n\n\n\n"));
   m_refBuffer->apply_tag (m_refTagFont, m_refBuffer->begin (),
                           m_refBuffer->end ());
   m_revealer.property_child_revealed ().signal_changed ().connect (
