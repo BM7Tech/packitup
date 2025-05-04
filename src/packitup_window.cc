@@ -358,15 +358,9 @@ PackitupWindow::reload_theme_css ()
 #if HAS_STYLE_PROVIDER_ADD_PROVIDER_FOR_DISPLAY
           Gtk::StyleProvider::remove_provider_for_display (
               get_display (), m_refThemeCssProvider);
-          // Gtk::StyleProvider::add_provider_for_display (
-          //     get_display (), m_refAppCustomCssProvider,
-          //     GTK_STYLE_PROVIDER_PRIORITY_USER);
 #else
           Gtk::StyleContext::remove_provider_for_display (
               get_display (), m_refThemeCssProvider);
-          // Gtk::StyleContext::add_provider_for_display (
-          //     get_display (), m_refAppCustomCssProvider,
-          //     GTK_STYLE_PROVIDER_PRIORITY_USER);
 #endif
           m_providerAdded = false;
         }

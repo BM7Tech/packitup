@@ -21,7 +21,8 @@
 #ifndef PACKITUP_PREFS_H
 #define PACKITUP_PREFS_H
 
-// This are for compatibility with Debian, because of missing headers
+// This are for compatibility with Debian/Old Distros, because of missing
+// headers
 #include <glibmmconfig.h>
 #if __has_include(<glibmm/version.h>)
 #include <glibmm/version.h>

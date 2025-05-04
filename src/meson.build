@@ -118,7 +118,6 @@ executable(program_name,
   install: true
 )
 
-#bin_dir = get_option('prefix') / get_option('bindir')
 bin_name = 'packitup'
 conf_data = configuration_data()
 conf_data.set('BINARY_NAME', bin_name)
