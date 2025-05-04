@@ -62,7 +62,7 @@ jobs:
           rm -rf AppDir/apprun-hooks/
           pushd AppDir/usr/lib
           ls *.so* | sort -u > libraries.txt
-          cat > libraries.txt << 'EOF'
+          cat >> libraries.txt << 'EOF'
           libharfbuzz.so.0
           libharfbuzz-gobject.so.0
           libharfbuzz-icu.so.0
@@ -123,7 +123,7 @@ jobs:
             echo "  * Processing $lib"
             for hostfile in /usr/lib/${lib}*; do
               if [[ -e "$hostfile" ]]; then
-                cp -L "$hostfile" .
+                cp -a "$hostfile" .
               else
                 echo "    ! Warning: no host files match /usr/lib/${lib}*"
               fi
