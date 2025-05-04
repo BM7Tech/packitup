@@ -130,10 +130,14 @@ jobs:
             soname=$(readelf -d "$real" 2>/dev/null \
                        | awk -F'[][]' '/SONAME/ {print $2; exit}')
             if [[ -n "$soname" ]]; then
-              echo "  * $real -> $soname"
-              ln -sf "$real" "$soname"
-              helper="${soname%%.so.*}.so"
-              ln -sf "$soname" "$helper"
+              if  [[ "$real" != "$soname" ]]; then
+                  echo "  * $real -> $soname"
+                  ln -sf "$real" "$soname"
+              fi
+              if [[ "$soname" != "$helper" ]]; then
+                  helper="${soname%%.so.*}.so"
+                  ln -sf "$soname" "$helper"
+              fi
             fi
           done
 
