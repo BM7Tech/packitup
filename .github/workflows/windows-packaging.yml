@@ -48,22 +48,22 @@ jobs:
         run: |
           rm -rf dist
           mkdir -p dist
-          cp build-win/packitup.exe dist/
+          cp build-win/src/packitup.exe dist/
           cp /ucrt64/bin/*.dll dist/
 
       - name: Compile GSettings schemas
         run: |
           mkdir -p dist/share/glib-2.0/schemas
-          cp build-win/share/glib-2.0/schemas/* dist/share/glib-2.0/schemas
+          cp src/*.gschema.xml dist/share/glib-2.0/schemas
           glib-compile-schemas dist/share/glib-2.0/schemas
 
       - name: Copy gettext tranlations
         run: |
           mkdir -p dist/share/locale/pt_BR/LC_MESSAGES
           mkdir -p dist/share/locale/en_US/LC_MESSAGES
-          cp build-win/po/pt_BR.mo \
+          cp build-win/po/pt_BR/LC_MESSAGES/packitup.mo \
             dist/share/locale/pt_BR/LC_MESSAGES/packitup.mo
-          cp build-win/po/en_US.mo \
+          cp build-win/po/en_US/LC_MESSAGES/packitup.mo \
             dist/share/locale/en_US/LC_MESSAGES/packitup.mo
 
       - name: Build Installer
