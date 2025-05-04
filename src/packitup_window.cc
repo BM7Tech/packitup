@@ -72,7 +72,7 @@ PackitupWindow::PackitupWindow (BaseObjectType *cobject,
   auto app_scrooledWindow = Gtk::make_managed<Gtk::ScrolledWindow> ();
   app_scrooledWindow->set_policy (Gtk::PolicyType::ALWAYS,
                                   Gtk::PolicyType::AUTOMATIC);
-  app_scrooledWindow->set_expand ();
+  // app_scrooledWindow->set_expand ();
 
   set_child (*app_scrooledWindow);
   app_scrooledWindow->set_child (*applicationBoxLayout);
