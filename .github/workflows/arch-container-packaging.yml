@@ -51,7 +51,7 @@ jobs:
           glib-compile-schemas  "$PWD"/AppDir/usr/share/glib-2.0/schemas
           gtk-update-icon-cache -f -t "$PWD"/AppDir/usr/share/icons/hicolor
           cp "$PWD"/AppDir/usr/share/applications/packitup.desktop "$PWD"/AppDir
-          cp "$PWD"/AppDir/usr/share/icons/hicolor/256x256/apps/tech.bm7.packitup "$PWD"/AppDir
+          cp "$PWD"/AppDir/usr/share/icons/hicolor/256x256/apps/tech.bm7.packitup.png "$PWD"/AppDir
 
       - name: Build AppDir folder
         run: |
