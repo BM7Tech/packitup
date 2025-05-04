@@ -62,15 +62,14 @@ jobs:
           rm -rf AppDir/apprun-hooks/
           pushd AppDir/usr/lib
           ls *.so* | sort -u > libraries.txt
+          cat > libraries.txt << 'EOF'
+          libharfbuzz.so.0
+          libharfbuzz-gobject.so.0
+          libharfbuzz-icu.so.0
+          libharfuzz-subset.so.0
+          EOF
           popd
           rm -rf AppDir/AppRun
-          cp AppDir/usr/lib/libraries.txt .
-          cat > libraries.txt << 'EOF'
-          libharfbuzz.so
-          libharfbuzz-gobject.so
-          libharfbuzz-ice.so
-          libharfuzz-subset.so
-          EOF
           cat > AppDir/AppRun << 'EOF'
           #!/usr/bin/env bash
           set -e
