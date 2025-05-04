@@ -1,4 +1,4 @@
-name: Build PackItUP AppImage
+name: Build PackItUP! AppImage
 
 on:
   release:
@@ -32,18 +32,14 @@ jobs:
             git \
             fuse2 \
             binutils desktop-file-utils fakeroot gdk-pixbuf2 patchelf \
-            python-pip python-setuptools squashfs-tools strace wget zsync
+            python-pip python-setuptools squashfs-tools strace wget zsync glib2-devel \
 
       - name: Setup builder environment
         run: |
-          useradd -m builder
-          runuser -l builder -c '
-            cd
-            git clone https://aur.archlinux.org/appimage-builder-bin.git appimage-builder
-            cd appimage-builder
-            makepkg --noconfirm --syncdeps
-          '
-          pacman -U --noconfirm /home/builder/appimage-builder/*.pkg.tar.zst
+          wget -c "https://raw.githubusercontent.com/linuxdeploy/linuxdeploy-plugin-gtk/master/linuxdeploy-plugin-gtk.sh"
+          wget -c "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage"
+          chmod +x linuxdeploy-x86_64.AppImage linuxdeploy-plugin-gtk.sh
+
       - name: Configure & build with Meson
         run: |
           meson setup build --prefix=/usr
@@ -51,19 +47,115 @@ jobs:
           rm -rf AppDir
           meson install -C build --destdir="$PWD/AppDir"
 
-      - name: Post-install fixes
+      - name: Prepare AppDir folder
         run: |
+          cp /usr/share/glib-2.0/schemas/* AppDir/usr/share/glib-2.0/schemas
           glib-compile-schemas  AppDir/usr/share/glib-2.0/schemas
           gtk-update-icon-cache -f -t AppDir/usr/share/icons/hicolor
+          cp AppDir/usr/share/applications/packitup.desktop AppDir
+          cp AppDir/usr/share/icons/hicolor/256x256/apps/tech.bm7.packitup AppDir
+
+      - name: Build AppDir folder
+        run: |
+          NO_STRIP=1 DEPLOY_GTK_VERSION=4 ./linuxdeploy-x86_64.AppImage --appdir AppDir --executable AppDir/usr/bin/packitup --plugin gtk
+      
+      - name: Patch AppDir Folder
+        run: |
+          rm -rf AppDir/apprun-hooks/
+          ls AppDir/usr/lib *.so* | sort - u > libraries.txt
+          rm -rf AppDir/AppRun
+          cat > AppDir/AppRun << 'EOF'
+          #!/usr/bin/env bash
+          set -e
+
+          this_dir="$(readlink -f "$(dirname "$0")")"
+
+          # locate bundle
+          APPDIR="$(dirname "$(realpath "$0")")"
+          # force our libs first
+          export LD_LIBRARY_PATH="$APPDIR/usr/lib"
+          # if host GTK sneaks in as libgtk-4.so.0, preload the correct one
+          #export LD_PRELOAD="$APPDIR/usr/lib/libgtk-4.so.1"
+          # basic data dirs so schemas & typelibs work
+          export XDG_DATA_DIRS="$APPDIR/usr/share:/usr/share:${XDG_DATA_DIRS:-}"
+          export GSETTINGS_SCHEMA_DIR="$APPDIR/usr/share/glib-2.0/schemas"
+          export GI_TYPELIB_PATH="$APPDIR/usr/lib/girepository-1.0"
+          export GDK_PIXBUF_MODULE_FILE="$APPDIR/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache"
+          export TEXTDOMAINDIR="$APPDIR/usr/share/locale"
+          # exec your real binary
+          exec "$this_dir"/AppRun.wrapped "$@"
+          EOF
+          chmod +x AppDir/AppRun
+          cat > fix_libraries.sh << 'EOF'
+          #!/usr/bin/env bash
+          # fix_symlinks.sh  - Automate copying host libraries and recreating symlinks
+          # Usage: run this after `linuxdeploy ... --plugin gtk` has populated AppDir,
+          # and before final `appimagetool AppDir` packaging.
+
+          set -euo pipefail
+
+          # Path to your AppDir
+          APPDIR="${APPDIR:-./AppDir}"
+          LIBDIR="$APPDIR/usr/lib"
+          LIST="libraries.txt"  # adjust path if needed
+
+          # Ensure we run in correct directory
+          cd "$LIBDIR"
+
+          shopt -s nullglob
+
+          # 1) Clean existing root-level library files (keep subdirs intact)
+          echo "Cleaning existing libraries in $LIBDIR..."
+          find . -maxdepth 1 -type f -name 'lib*.so*' -delete
+
+          # 2) Copy host libraries based on list
+          echo "Copying host libraries listed in $LIST..."
+          while IFS= read -r lib; do
+            # skip symlink patterns in list
+            [[ "$lib" == *'->'* ]] && continue
+            echo "  * Processing $lib"
+            for hostfile in /usr/lib/${lib}*; do
+              if [[ -e "$hostfile" ]]; then
+                cp -a "$hostfile" .
+              else
+                echo "    ! Warning: no host files match /usr/lib/${lib}*"
+              fi
+            done
+          done < "$LIST"
+
+          # 3) Recreate SONAME and helper symlinks
+          echo "Recreating SONAME and helper symlinks..."
+          for real in *.so.*.*; do
+            soname=$(readelf -d "$real" 2>/dev/null \
+                       | awk -F'[][]' '/SONAME/ {print $2; exit}')
+            if [[ -n "$soname" ]]; then
+              echo "  * $real -> $soname"
+              ln -sf "$real" "$soname"
+              helper="${soname%%.so.*}.so"
+              ln -sf "$soname" "$helper"
+            fi
+          done
+
+          echo "Symlinks and libraries updated successfully in $LIBDIR."
+          EOF
+          chmod +x fix_libraries.sh
+          ./fix_libraries.sh
+      
+      - name: Run appimagetool to create AppImage
+        run: |
+          wget -c https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
+          chmod +x appimagetool-x86_64.AppImage
+          ./appimagetool-x86_64.AppImage AppDir
+        
 
       - name: Preparing artifacts directory
         run: |
           mkdir -p artifacts
 
-      - name: Bundle into AppImage
+      - name: Rename into friendly AppImage
         run: |
-          appimage-builder --recipe "$PWD"/AppImageBuilder.yml --skip-tests
           mv PackItUP*.AppImage artifacts/PackItUP-${{ github.ref_name }}.AppImage
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
