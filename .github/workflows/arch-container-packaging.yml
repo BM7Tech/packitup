@@ -152,7 +152,20 @@ jobs:
           EOF
           chmod +x fix_libraries.sh
           ./fix_libraries.sh
-      
+          pushd AppDir/usr/lib
+          cp /usr/lib/libharfbuzz-gobject.so.0.61120.0 .
+          ln -sf libharfbuzz-gobject.so.0 libharfbuzz-gobject.so
+          ln -sf libharfbuzz-gobject.so.0.61120.0 libharfbuzz-gobject.so.0
+          cp /usr/lib/libharfbuzz-icu.so.0.61120.0 .
+          ln -sf libharfbuzz-icu.so.0 libharfbuzz-icu.so
+          ln -sf libharfbuzz-icu.so.0.61120.0 libharfbuzz-icu.so.0
+          cp /usr/lib/libharfbuzz-subset.so.0.61120.0 .
+          ln -sf libharfbuzz-subset.so.0 libharfbuzz-subset.so
+          ln -sf libharfbuzz-subset.so.0.61120.0 libharfbuzz-subset.so.0
+          cp /usr/lib/libharfbuzz.so.0.61120.0 .
+          ln -sf libharfbuzz.so.0 libharfbuzz.so
+          ln -sf libharfbuzz.so.0.61120.0 libharfbuzz.so.0
+          popd
       - name: Run appimagetool to create AppImage
         run: |
           wget -c https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
