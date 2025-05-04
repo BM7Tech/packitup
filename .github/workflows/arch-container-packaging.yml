@@ -127,8 +127,8 @@ jobs:
           # 3) Recreate SONAME and helper symlinks
           echo "Recreating SONAME and helper symlinks..."
           for real in *.so.*.*; do
-            soname=$(readelf -d "$real" 2>/dev/null \
-                       | awk -F'[][]' '/SONAME/ {print $2; exit}')
+            desc=$(readelf -d "$real" 2>/dev/null)
+            soname=$(awk -F'[][]' '/SONAME/ {print $2; exit}' <<< "$desc")
             if [[ -n "$soname" ]]; then
               if  [[ "$real" != "$soname" ]]; then
                 echo "  * $real -> $soname"
