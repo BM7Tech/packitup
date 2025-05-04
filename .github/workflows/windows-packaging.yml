@@ -77,7 +77,7 @@ jobs:
     name: Build MSYS2 PKGBUILD
     runs-on: ubuntu-latest
     container:
-      image: msys2/msys2:latest
+      image: msys2/msys2-base:latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
