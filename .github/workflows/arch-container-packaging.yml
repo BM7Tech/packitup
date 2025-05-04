@@ -44,25 +44,27 @@ jobs:
         run: |
           meson setup build --prefix=/usr
           meson compile -C build
-          rm -rf "$PWD"/AppDir
-          mkdir "$PWD"/AppDir
+          rm -rf AppDir
+          mkdir AppDir
           meson install -C build --destdir="$PWD/AppDir"
-          cp /usr/share/glib-2.0/schemas/* "$PWD"/AppDir/usr/share/glib-2.0/schemas
-          glib-compile-schemas  "$PWD"/AppDir/usr/share/glib-2.0/schemas
-          gtk-update-icon-cache -f -t "$PWD"/AppDir/usr/share/icons/hicolor
-          cp "$PWD"/AppDir/usr/share/applications/packitup.desktop "$PWD"/AppDir
-          cp "$PWD"/AppDir/usr/share/icons/hicolor/256x256/apps/tech.bm7.packitup.png "$PWD"/AppDir
+          cp /usr/share/glib-2.0/schemas/* AppDir/usr/share/glib-2.0/schemas
+          glib-compile-schemas  AppDir/usr/share/glib-2.0/schemas
+          gtk-update-icon-cache -f -t AppDir/usr/share/icons/hicolor
+          cp AppDir/usr/share/applications/packitup.desktop AppDir
+          cp AppDir/usr/share/icons/hicolor/256x256/apps/tech.bm7.packitup.png AppDir
 
       - name: Build AppDir folder
         run: |
-          NO_STRIP=1 DEPLOY_GTK_VERSION=4 ./linuxdeploy-x86_64.AppImage --appdir "$PWD"/AppDir --executable "$PWD"/AppDir/usr/bin/packitup --plugin gtk
+          NO_STRIP=1 DEPLOY_GTK_VERSION=4 ./linuxdeploy-x86_64.AppImage --appdir AppDir --executable AppDir/usr/bin/packitup --plugin gtk
       
       - name: Patch AppDir Folder
         run: |
-          rm -rf "$PWD"/AppDir/apprun-hooks/
-          ls "$PWD"/AppDir/usr/lib *.so* | sort - u > "$PWD"/libraries.txt
-          rm -rf "$PWD"/AppDir/AppRun
-          cat > "$PWD"/AppDir/AppRun << 'EOF'
+          rm -rf AppDir/apprun-hooks/
+          pushd AppDir/usr/lib
+          ls *.so* | sort -u > ../../../libraries.txt
+          popd
+          rm -rf AppDir/AppRun
+          cat > AppDir/AppRun << 'EOF'
           #!/usr/bin/env bash
           set -e
 
@@ -83,7 +85,7 @@ jobs:
           # exec your real binary
           exec "$this_dir"/AppRun.wrapped "$@"
           EOF
-          chmod +x "$PWD"/AppDir/AppRun
+          chmod +x AppDir/AppRun
           cat > fix_libraries.sh << 'EOF'
           #!/usr/bin/env bash
           # fix_symlinks.sh  - Automate copying host libraries and recreating symlinks
@@ -143,7 +145,7 @@ jobs:
         run: |
           wget -c https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
           chmod +x appimagetool-x86_64.AppImage
-          ./appimagetool-x86_64.AppImage "$PWD"/AppDir
+          ./appimagetool-x86_64.AppImage AppDir
         
 
       - name: Preparing artifacts directory
