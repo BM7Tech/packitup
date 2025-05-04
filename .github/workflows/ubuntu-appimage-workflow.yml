@@ -94,65 +94,7 @@ jobs:
           exec "$this_dir"/AppRun.wrapped
           EOF
           chmod +x AppDir/AppRun
-          cat > fix_libraries.sh << 'EOF'
-          #!/usr/bin/env bash
-          # fix_symlinks.sh  - Automate copying host libraries and recreating symlinks
-          # Usage: run this after `linuxdeploy ... --plugin gtk` has populated AppDir,
-          # and before final `appimagetool AppDir` packaging.
 
-          set -euo pipefail
-
-          # Path to your AppDir
-          APPDIR="${APPDIR:-./AppDir}"
-          LIBDIR="$APPDIR/usr/lib"
-          LIST="libraries.txt"  # adjust path if needed
-
-          # Ensure we run in correct directory
-          cd "$LIBDIR"
-
-          shopt -s nullglob
-
-          # 1) Clean existing root-level library files (keep subdirs intact)
-          echo "Cleaning existing libraries in $LIBDIR..."
-          find . -maxdepth 1 -type f -name 'lib*.so*' -delete
-
-          # 2) Copy host libraries based on list
-          echo "Copying host libraries listed in $LIST..."
-          while IFS= read -r lib; do
-            # skip symlink patterns in list
-            [[ "$lib" == *'->'* ]] && continue
-            echo "  * Processing $lib"
-            for hostfile in /usr/lib/${lib}*; do
-              if [[ -e "$hostfile" ]]; then
-                cp -a "$hostfile" .
-              else
-                echo "    ! Warning: no host files match /usr/lib/${lib}*"
-              fi
-            done
-          done < "$LIST"
-
-          # 3) Recreate SONAME and helper symlinks
-          echo "Recreating SONAME and helper symlinks..."
-          for real in *.so.*.*; do
-            desc=$(readelf -d "$real" 2>/dev/null)
-            soname=$(awk -F'[][]' '/SONAME/ {print $2; exit}' <<< "$desc")
-            if [[ -n "$soname" ]]; then
-              if  [[ "$real" != "$soname" ]]; then
-                echo "  * $real -> $soname"
-                ln -sf "$real" "$soname"
-              fi
-              helper="${soname%%.so.*}.so"
-              if [[ "$soname" != "$helper" ]]; then
-                ln -sf "$soname" "$helper"
-              fi
-            fi
-          done
-
-          echo "Symlinks and libraries updated successfully in $LIBDIR."
-          EOF
-          chmod +x fix_libraries.sh
-          ./fix_libraries.sh
-      
       - name: Run appimagetool to create AppImage
         run: |
           wget -c https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
