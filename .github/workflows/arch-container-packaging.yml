@@ -61,9 +61,10 @@ jobs:
         run: |
           rm -rf AppDir/apprun-hooks/
           pushd AppDir/usr/lib
-          ls *.so* | sort -u > ../../libraries.txt
+          ls *.so* | sort -u > libraries.txt
           popd
           rm -rf AppDir/AppRun
+          cp AppDir/usr/lib/libraries.txt .
           cat > AppDir/AppRun << 'EOF'
           #!/usr/bin/env bash
           set -e
