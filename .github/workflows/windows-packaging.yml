@@ -25,6 +25,7 @@ jobs:
             mingw-w64-ucrt-x86_64-toolchain
             mingw-w64-ucrt-x86_64-gtk4
             mingw-w64-ucrt-x86_64-gtkmm4
+            mingw-w64-ucrt-x86_6-python
             mingw-w64-ucrt-x86_64-glib2
             mingw-w64-ucrt-x86_64-nsis
             meson
