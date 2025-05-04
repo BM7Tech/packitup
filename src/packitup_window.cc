@@ -71,7 +71,7 @@ PackitupWindow::PackitupWindow (BaseObjectType *cobject,
         "no \"application_box_layout\" object in window.ui");
   auto app_scrooledWindow = Gtk::make_managed<Gtk::ScrolledWindow> ();
   app_scrooledWindow->set_policy (Gtk::PolicyType::AUTOMATIC,
-                                  Gtk::PolicyType::AUTOMATIC);
+                                  Gtk::PolicyType::ALWAYS);
   app_scrooledWindow->set_expand ();
 
   set_child (*app_scrooledWindow);
