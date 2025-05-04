@@ -21,12 +21,31 @@ Section "Install"
     SetOutPath "$INSTDIR"
     File /r "dist\*.*"
 
-    ; create Start Menu shortcut
-    CreateDirectory "$SMPROGRAMS\${APP_NAME}"
-    CreateShortcut "$SMPROGRAMS\${APP_NAME}\${APP_NAME}.lnk" "$INSTDIR\${EXE_NAME}"
+    ; this is reduntand but safe
+    CreateDirectory "$INSTDIR\share\glib-2.0\schemas"
+    CreateDirectory "$INSTDIR\share\locale\pt_BR\LC_MESSAGES"
 
-    ; create Desktop shortcut
-    CreateShortcut "$DESKTOP\${APP_NAME}.lnk" "$INSTDIR\${EXE_NAME}"
+    ; — install GSettings schemas
+    File /r "dist\share\glib-2.0\schemas\*.*"
+
+    ; — install .mo translation
+    File "dist\share\locale\pt_BR\LC_MESSAGES\packitup.mo"
+    File "dist\share\locale\en_US\LC_MESSAGES\packitup.mo"
+
+     ; — write a small launcher .bat
+    ;   this wrapper sets GSETTINGS_SCHEMA_DIR for your exe
+    FileOpen $0 "$INSTDIR\packitup.bat" w
+    FileWrite $0 '@echo off$\r$\n'
+    FileWrite $0 'set "GSETTINGS_SCHEMA_DIR=%~dp0share\glib-2.0\schemas"$\r$\n'
+    FileWrite $0 '"%~dp0\packitup.exe" %*$\r$\n'
+    FileClose $0
+
+    ; — put shortcuts to the .bat instead of the raw exe
+    CreateDirectory "$SMPROGRAMS\${APP_NAME}"
+    CreateShortcut "$SMPROGRAMS\${APP_NAME}\${APP_NAME}.lnk" \
+                   "$INSTDIR\packitup.bat"
+    CreateShortcut "$DESKTOP\${APP_NAME}.lnk" \
+                   "$INSTDIR\packitup.bat"
 
     ; write uninstaller
     WriteUninstaller "$INSTDIR\Uninstall.exe"
