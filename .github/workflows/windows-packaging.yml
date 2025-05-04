@@ -26,7 +26,7 @@ jobs:
             mingw-w64-ucrt-x86_64-gtk4
             mingw-w64-ucrt-x86_64-gtkmm4
             mingw-w64-ucrt-x86_64-glib2
-            msys/nsis
+            mingw-w64-ucrt-x86_64-nsis
             meson
             ninja
 
