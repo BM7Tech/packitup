@@ -1,4 +1,4 @@
-name: Build PackItUP! AppImage On ArchLinux Container
+name: Linux Packaging
 
 on:
   release:
@@ -6,33 +6,39 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  linux:
     runs-on: ubuntu-latest
-
-    # run *all* the steps inside an Arch Linux container
-    container:
-      image: archlinux:latest
-      # if you need fuse inside the container:
-      options: --privileged
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Sync Arch keyring & install deps
+      - name: Install build and packaging dependencies
         run: |
-          pacman -Sy --noconfirm archlinux-keyring
-          pacman -Syu --noconfirm \
-            base-devel \
-            python \
-            libxml2 gettext \
-            meson ninja gtk4 gtkmm-4.0 \
-            gettext pkgconf \
+          sudo apt-get update
+          sudo apt-get install -y \
+            meson ninja-build \
+            fonts-noto \
+            build-essential \
+            curl gettext libxml2-utils \
+            python3 \
+            pkg-config \
+            cmake \
+            libglib2.0-dev libgtk-4-dev libgtkmm-4.0-dev \
+            wget unzip \
+            libfuse2t64 \
+            patchelf \
+            libgtk-4-1 libgtkmm-4.0-0 \
             xdg-desktop-portal xdg-desktop-portal-gtk xdg-utils \
-            git \
-            fuse2 \
-            binutils desktop-file-utils fakeroot gdk-pixbuf2 patchelf \
-            python-pip python-setuptools squashfs-tools strace wget zsync glib2-devel \
+          squashfs-tools strace wget zsync libpackagekit-glib2-dev
+          
+          # AppImage tooling
+          sudo apt-get install -y \
+            libglib2.0-bin \
+            libgtk-4-bin 
+
+          # Flatpak stuff
+          # ...
 
       - name: Setup builder environment
         run: |
@@ -52,11 +58,11 @@ jobs:
           gtk-update-icon-cache -f -t AppDir/usr/share/icons/hicolor
           cp AppDir/usr/share/applications/packitup.desktop AppDir
           cp AppDir/usr/share/icons/hicolor/256x256/apps/tech.bm7.packitup.png AppDir
-
+      
       - name: Build AppDir folder
         run: |
           NO_STRIP=1 DEPLOY_GTK_VERSION=4 ./linuxdeploy-x86_64.AppImage --appdir AppDir --executable AppDir/usr/bin/packitup --plugin gtk
-      
+
       - name: Patch AppDir Folder
         run: |
           rm -rf AppDir/apprun-hooks/
