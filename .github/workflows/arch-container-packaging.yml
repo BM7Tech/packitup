@@ -65,6 +65,12 @@ jobs:
           popd
           rm -rf AppDir/AppRun
           cp AppDir/usr/lib/libraries.txt .
+          cat > libraries.txt << 'EOF'
+          libharfbuzz.so
+          libharfbuzz-gobject.so
+          libharfbuzz-ice.so
+          libharfuzz-subset.so
+          EOF
           cat > AppDir/AppRun << 'EOF'
           #!/usr/bin/env bash
           set -e
