@@ -23,6 +23,7 @@ jobs:
           update: true
           install: |
             mingw-w64-ucrt-x86_64-toolchain
+            mingw-w64-ucrt-x86_64-binutils
             mingw-w64-ucrt-x86_64-gtk4
             mingw-w64-ucrt-x86_64-gtkmm4
             mingw-w64-ucrt-x86_64-python
