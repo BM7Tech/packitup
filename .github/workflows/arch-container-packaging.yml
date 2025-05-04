@@ -131,12 +131,12 @@ jobs:
                        | awk -F'[][]' '/SONAME/ {print $2; exit}')
             if [[ -n "$soname" ]]; then
               if  [[ "$real" != "$soname" ]]; then
-                  echo "  * $real -> $soname"
-                  ln -sf "$real" "$soname"
+                echo "  * $real -> $soname"
+                ln -sf "$real" "$soname"
               fi
+              helper="${soname%%.so.*}.so"
               if [[ "$soname" != "$helper" ]]; then
-                  helper="${soname%%.so.*}.so"
-                  ln -sf "$soname" "$helper"
+                ln -sf "$soname" "$helper"
               fi
             fi
           done
