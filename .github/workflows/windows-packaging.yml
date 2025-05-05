@@ -50,6 +50,7 @@ jobs:
           mkdir -p dist
           mkdir -p dist/bin
           cp build-win/src/packitup.exe dist/bin/
+          cp build-win/src/packitup-real.exe dist/bin/
           cp packitup.ico dist/
           cp /ucrt64/bin/*.dll dist/
 
