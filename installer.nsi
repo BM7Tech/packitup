@@ -3,52 +3,50 @@
 !define EXE_NAME "packitup.exe"
 !define VERSION  "1.0.0"
 !define INSTALL_DIR "$PROGRAMFILES\${APP_NAME}"
+!include MUI2.nsh
+
+!define MUI_ICON    "dist\\packitup.ico"
+!define MUI_UNICON  "dist\\packitup.ico"
+
+!insertmacro MUI_PAGE_WELCOME
+!insertmacro MUI_PAGE_DIRECTORY
+!insertmacro MUI_PAGE_INSTFILES
+!insertmacro MUI_PAGE_FINISH
+!insertmacro MUI_UNPAGE_CONFIRM
+!insertmacro MUI_UNPAGE_INSTFILES
 
 ; the resulting installer:
 OutFile "${APP_NAME}-${VERSION}-Setup.exe"
 InstallDir ${INSTALL_DIR}
-
-; show directory page and progress
-Page directory
-Page instfiles
 
 ; uninstaller pages
 UninstPage uninstConfirm
 UninstPage instfiles
 
 Section "Install"
-    ; copy all files from dist/ into the installation folder
     SetOutPath "$INSTDIR"
-    File /r "dist\*.*"
 
-    ; this is reduntand but safe
-    CreateDirectory "$INSTDIR\share\glib-2.0\schemas"
-    CreateDirectory "$INSTDIR\share\locale\pt_BR\LC_MESSAGES"
+    ; Copy your two executables (launcher + real app)
+    File "dist\\bin\\packitup.exe"
+    File "dist\\bin\\packitup-real.exe"
+    
+    ; — all the DLLs we need
+    File /r "dist\\*.dll"
 
-    ; — install GSettings schemas
-    File /r "dist\share\glib-2.0\schemas\*.*"
+    ; Copy schemas & translations
+    File /r "dist\\share\\glib-2.0\\schemas\\*.*"
+    File /r "dist\\share\\locale\\pt_BR\\LC_MESSAGES\\*.mo"
+    File /r "dist\\share\\locale\\en_US\\LC_MESSAGES\\*.mo"
 
-    ; — install .mo translation
-    File "dist\share\locale\pt_BR\LC_MESSAGES\packitup.mo"
-    File "dist\share\locale\en_US\LC_MESSAGES\packitup.mo"
+    ; Copy your icon for the shortcut
+    File "dist\\packitup.ico"
 
-     ; — write a small launcher .bat
-    ;   this wrapper sets GSETTINGS_SCHEMA_DIR for your exe
-    FileOpen $0 "$INSTDIR\packitup.bat" w
-    FileWrite $0 '@echo off$\r$\n'
-    FileWrite $0 'set "GSETTINGS_SCHEMA_DIR=%~dp0share\glib-2.0\schemas"$\r$\n'
-    FileWrite $0 '"%~dp0\packitup.exe" %*$\r$\n'
-    FileClose $0
+    ; Create shortcuts
+    CreateDirectory "$SMPROGRAMS\\PackItUP"
+    CreateShortcut "$SMPROGRAMS\\PackItUP\\PackItUP.lnk" "$INSTDIR\\packitup.exe" "" "$INSTDIR\\packitup.ico"
+    CreateShortcut "$DESKTOP\\PackItUP.lnk" "$INSTDIR\\packitup.exe" "" "$INSTDIR\\packitup.ico"
 
-    ; — put shortcuts to the .bat instead of the raw exe
-    CreateDirectory "$SMPROGRAMS\${APP_NAME}"
-    CreateShortcut "$SMPROGRAMS\${APP_NAME}\${APP_NAME}.lnk" \
-                   "$INSTDIR\packitup.bat"
-    CreateShortcut "$DESKTOP\${APP_NAME}.lnk" \
-                   "$INSTDIR\packitup.bat"
-
-    ; write uninstaller
-    WriteUninstaller "$INSTDIR\Uninstall.exe"
+    WriteUninstaller "$INSTDIR\\Uninstall.exe"
 SectionEnd
 
 Section "Uninstall"

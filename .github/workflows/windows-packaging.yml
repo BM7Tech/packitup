@@ -49,6 +49,7 @@ jobs:
           rm -rf dist
           mkdir -p dist
           cp build-win/src/packitup.exe dist/
+          cp packitup.ico dist/
           cp /ucrt64/bin/*.dll dist/
 
       - name: Compile GSettings schemas

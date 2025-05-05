@@ -17,6 +17,7 @@
 # along with PackItUP!. If not, see <https://www.gnu.org/licenses/>.
 
 program_name = 'packitup'
+host = host_machine
 
 schemas_dir =  get_option('prefix') / get_option('datadir') / 'glib-2.0' / 'schemas'
 install_data(
@@ -105,6 +106,30 @@ gtkmm_dep = dependency('gtkmm-4.0', version:'>=4.10', required: true)
 glib_dep = dependency('glibmm-2.68')
 gio_dep = dependency('giomm-2.68')
 intl_dep = dependency('intl')
+
+# Only build the launcher when the host system is Windows
+if host.system() == 'windows'
+  launcher = executable(
+    'packitup-launcher',
+    cpp_sources, resources, schemas,
+    'launcher.c',
+    dependencies: [
+    gtkmm_dep,
+    glib_dep,
+    gio_dep,
+    intl_dep,
+    ],
+    win_subsystem: 'windows',  # GUI-only (no console)
+    install: false             # we’ll install it manually below
+  )
+
+  # Rename + install it as packitup.exe on Windows
+  install_data(
+    launcher,
+    install_dir: get_option('bindir'),
+    rename: 'packitup.exe'
+  )
+endif
 
 executable(program_name,
   cpp_sources, resources, schemas,
