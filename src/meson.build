@@ -113,7 +113,7 @@ if host.system() == 'windows'
     'packitup',
     'launcher.c',
     dependencies: [],
-    win_subsystem: 'windows',  # GUI-only (no console)
+    win_subsystem: 'console',  # GUI-only (no console)
     install: true,             # we’ll install it manually below
     install_dir: get_option('bindir')
   )
@@ -128,7 +128,7 @@ if host.system() == 'windows'
       gio_dep,
       intl_dep,
     ],
-    win_subsystem: 'windows',
+    win_subsystem: 'console',
     install: false
   )
 else
