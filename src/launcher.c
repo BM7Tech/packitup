@@ -21,6 +21,7 @@ WinMain (HINSTANCE, HINSTANCE, LPSTR, int)
         }
     }
 
+  SetEnvironmentVariableW (L"TEXTDOMAINDIR", path);
   // 3) Build schema-dir path and set the env var
   WCHAR schema_dir[MAX_PATH];
   lstrcpyW (schema_dir, path);

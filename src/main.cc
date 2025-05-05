@@ -24,8 +24,16 @@
 int
 main (int argc, char *argv[])
 {
-  // Localized text with AppImage relative path support
-  setlocale (LC_ALL, "");
+  if (!std::setlocale (LC_ALL, "")) // try system locale (pt_BR etc)
+    std::setlocale (LC_ALL, "C");   // fallback on failure
+  try
+    {
+      std::locale::global (std::locale ("")); // global C++ locale
+    }
+  catch (std::exception &)
+    {
+      std::locale::global (std::locale::classic ());
+    }
   bool found = false;
   auto txtdir = Glib::getenv ("TEXTDOMAINDIR", found);
   if (!found && txtdir.empty ())
