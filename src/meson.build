@@ -128,7 +128,7 @@ if host.system() == 'windows'
       gio_dep,
       intl_dep,
     ],
-    win_subsystem: 'console',
+    win_subsystem: 'windows',
     install: false
   )
 else
