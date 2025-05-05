@@ -132,17 +132,17 @@ if host.system() == 'windows'
     install: false
   )
 else
-executable(program_name,
-  cpp_sources, resources, schemas,
-  dependencies: [
-    gtkmm_dep,
-    glib_dep,
-    gio_dep,
-    intl_dep,
-  ],
-  win_subsystem: 'windows',
-  install: true
-)
+  executable(program_name,
+    cpp_sources, resources, schemas,
+    dependencies: [
+      gtkmm_dep,
+      glib_dep,
+      gio_dep,
+      intl_dep,
+    ],
+    win_subsystem: 'windows',
+    install: true
+  )
 endif
 bin_name = 'packitup'
 conf_data = configuration_data()
