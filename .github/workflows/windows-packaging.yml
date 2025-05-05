@@ -48,6 +48,7 @@ jobs:
         run: |
           rm -rf dist
           mkdir -p dist
+          mkdir -p dist/bin
           cp build-win/src/packitup.exe dist/bin/
           cp packitup.ico dist/
           cp /ucrt64/bin/*.dll dist/
