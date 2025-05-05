@@ -110,27 +110,28 @@ intl_dep = dependency('intl')
 # Only build the launcher when the host system is Windows
 if host.system() == 'windows'
   launcher = executable(
-    'packitup-launcher',
-    cpp_sources, resources, schemas,
+    'packitup',
     'launcher.c',
-    dependencies: [
-    gtkmm_dep,
-    glib_dep,
-    gio_dep,
-    intl_dep,
-    ],
+    dependencies: [],
     win_subsystem: 'windows',  # GUI-only (no console)
-    install: false             # we’ll install it manually below
+    install: true,             # we’ll install it manually below
+    install_dir: get_option('bindir')
   )
 
   # Rename + install it as packitup.exe on Windows
-  install_data(
-    launcher,
-    install_dir: get_option('bindir'),
-    rename: 'packitup.exe'
+  realapp = executable(
+    'packitup-real',
+    cpp_sources, resources, schemas,
+    dependencies: [
+      gtkmm_dep,
+      glib_dep,
+      gio_dep,
+      intl_dep,
+    ],
+    win_subsystem: 'windows',
+    install: false
   )
-endif
-
+else
 executable(program_name,
   cpp_sources, resources, schemas,
   dependencies: [
@@ -142,7 +143,7 @@ executable(program_name,
   win_subsystem: 'windows',
   install: true
 )
-
+endif
 bin_name = 'packitup'
 conf_data = configuration_data()
 conf_data.set('BINARY_NAME', bin_name)
