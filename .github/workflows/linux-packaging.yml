@@ -12,72 +12,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Install build and packaging dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            meson ninja-build \
-            fonts-noto \
-            build-essential \
-            curl gettext libxml2-utils \
-            python3 \
-            pkg-config \
-            cmake \
-            libglib2.0-dev libgtk-4-dev libgtkmm-4.0-dev \
-            wget unzip \
-            libfuse2t64 \
-            patchelf \
-            libgtk-4-1 libgtkmm-4.0-0 \
-            xdg-desktop-portal xdg-desktop-portal-gtk xdg-utils \
-          
-          # AppImage tooling
-          sudo apt-get install -y \
-            libglib2.0-bin \
-            libgtk-4-bin 
-
-          # Flatpak stuff
-          # ...
-
-      - name: Configure and build
-        run: |
-          meson setup build --prefix=/usr
-          meson compile -C build
-
-      - name: Install Source files into DESTDIR
-        run: |
-          rm -rf AppDir
-          mkdir AppDir
-          meson install -C build --destdir "$PWD/AppDir"          
-          glib-compile-schemas   AppDir/usr/share/glib-2.0/schemas
-          gtk-update-icon-cache -f -t AppDir/usr/share/icons/hicolor 
-          
       - name: Create source tarball
         run: |
           mkdir -p artifacts
-          tar czf artifacts/packitup-${{ github.ref_name }}.tar.gz \
-            -C AppDir .
-      - name: Prepare linuxdeploy
-        run: |
-          wget -c "https://github.com/darealshinji/linuxdeploy-plugin-checkrt/releases/download/continuous/linuxdeploy-plugin-checkrt.sh"
-          wget -c "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage"
-           wget -c "https://raw.githubusercontent.com/linuxdeploy/linuxdeploy-plugin-gtk/master/linuxdeploy-plugin-gtk.sh"
-          chmod a+x linuxdeploy-x86_64.AppImage linuxdeploy-plugin-checkrt.sh linuxdeploy-plugin-gtk.sh
-          cp /usr/share/glib-2.0/schemas/* AppDir/usr/share/glib-2.0/schemas
-          glib-compile-schemas AppDir/usr/share/glib-2.0/schemas
-          cp AppDir/usr/share/applications/packitup.desktop AppDir/
-          cp AppDir/usr/share/icons/hicolor/256x256/apps/tech.bm7.packitup.png AppDir/
-          NO_STRIP=1 DEPLOY_GTK_VERSION=4 ./linuxdeploy-x86_64.AppImage \
-            --appdir AppDir \
-            --executable AppDir/usr/bin/packitup \
-            --plugin checkrt \
-            --plugin gtk \
-            --output appimage
-          mv PackItUP*.AppImage artifacts/PackItUP-${{ github.ref_name }}.AppImage
-      - name: Upload Linux artifacts
+          tar czf artifacts/packitup-${{ github.ref_name }}.tar.gz . .
+           - name: Upload Linux artifacts
         uses: actions/upload-artifact@v4
         with:
           name: linux-binaries
           path: |
             artifacts/packitup-${{ github.ref_name }}.tar.gz
-            artifacts/PackItUP-${{ github.ref_name }}.AppImage
