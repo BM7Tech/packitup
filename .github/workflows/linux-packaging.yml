@@ -12,13 +12,21 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
       - name: Create source tarball
+        id: make_tar
         run: |
-          mkdir -p artifacts
-          tar czf artifacts/packitup-${{ github.ref_name }}.tar.gz . .
-           - name: Upload Linux artifacts
-        uses: actions/upload-artifact@v4
+          tar czf packitup-${{ github.ref_name }}.tar.gz \
+            --exclude .git \
+            --transform "s,^,packitup-${{ github.ref_name }}/," \
+            .
+
+      - name: Upload as Release asset
+        uses: actions/upload-release-asset@v1
         with:
-          name: linux-binaries
-          path: |
-            artifacts/packitup-${{ github.ref_name }}.tar.gz
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./packitup-${{ github.ref_name }}.tar.gz
+          asset_name: packitup-${{ github.ref_name }}.tar.gz
+          asset_content_type: application/gzip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
