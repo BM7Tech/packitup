@@ -178,10 +178,3 @@ jobs:
           asset_content_type: application/octet-stream
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: PackItUP-AppImage
-          path: artifacts/PackItUP-${{ github.ref_name }}.AppImage
-
