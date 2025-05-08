@@ -101,7 +101,7 @@ apk add \
   xdg-desktop-portal xdg-desktop-portal-gtk xdg-utils
 ```
 
-### Void Linux
+### Void Linux (packages names might be wrong, didn't test it)
 ```
 sudo xbps-install -Sy \
   noto-fonts-ttf \
