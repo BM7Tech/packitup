@@ -1,28 +1,32 @@
 
-# Pack It UP! - Nunca mais fique sem cerveja.
-# Em Desenvolvimento
+# ![PackItUP! Logo](./src/tech.bm7.packitup.svg) Pack It UP! - Nunca mais fique sem cerveja.
 [![License](https://img.shields.io/badge/License-GPLv3-blue)](./LICENSE)
 [![English](https://img.shields.io/badge/README-en--US-blue)](./README.md)
 [![Português](https://img.shields.io/badge/README-pt--BR-green)](./README.pt-BR.md)
-### ***Nomes dos pacotes podem estar errado, ainda estou testando*** 
-#### Testado em:
+- Essa é o nosso aplicativo para calcular quanto de cerveja você e seus amigos
+precisam comprar para não faltar cerveja na sua festa/churrasco/encontro :)
+
+## Testado em:
 - [x] Ubuntu/Kubuntu
 - [x] Fedora Workstation/KDE Plasma
 - [x] OpenSUSE Tumbleweed
 - [x] Arch Linux
 - [x] Alpine Linux
 - [ ] Void Linux
+
 ## KDE Plasma/Kubuntu
 Apesar do aplicativo funcionar no ambiente Desktop KDE, mudar a aparência da aplicação para combinar com o seu Desktop pode ser um tanto quanto complicado e conter alguns pequenos bugs. Entretando o aplicativo não contém a livraria LibAdwaita, facilitando a vida daqueles que amam KDE.
+
 ## GNOME/LibAdwaita
 Caso você queira uma versão mais adequada ao Ambiente Desktop GNOME (suporte ao tema escuro, etc), veja [PackItUP! - GNOME](https://github.com/BM7Tech/packitup-gnome).
+
 ## Instalar
 No momento a única maneira de instalar o nosso programa é clonando o repositório:
 
 1. Instale as [Dependências de compilação](#build-prerequisites)
 2. `git clone https://github.com/edu-bm7/packitup`
 3. `cd packitup`
-4. `meson setup builddir`
+4. `meson setup builddir --prefix=/usr`
     - Caso queira, você pode escolher um diretório customizado para instalação, porém, os pacotes de tradução não irão funcionar. 
     - Se quiser fazê-lo mesmo assim, `meson setup --prefix=SEU_DIRETORIO builddir`
 5. `cd builddir`
@@ -105,7 +109,7 @@ apk add \
   xdg-desktop-portal xdg-desktop-portal-gtk xdg-utils
 ```
 
-### Void Linux
+### Void Linux (Nomes de pacto4e4s podem estar errado)
 ```
 sudo xbps-install -Sy \
   noto-fonts-ttf \

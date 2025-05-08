@@ -156,7 +156,7 @@ along with PackItUP!. If not, see <https://www.gnu.org/licenses/>.
                     <child>
                       <object class="GtkLabel">
                         <property name="label"
-                                  translatable="yes">Drinks more than moderate:</property>
+                                  translatable="yes">Above-moderate drinkers:</property>
                         <property name="wrap">True</property>
                         <property name="halign">GTK_ALIGN_START</property>
                         <property name="hexpand">True</property>
@@ -186,7 +186,7 @@ along with PackItUP!. If not, see <https://www.gnu.org/licenses/>.
                     <child>
                       <object class="GtkLabel">
                         <property name="label"
-                                  translatable="yes">Drinks alright:</property>
+                                  translatable="yes">Moderate drinkers:</property>
                         <property name="wrap">True</property>
                         <property name="halign">GTK_ALIGN_START</property>
                         <property name="hexpand">True</property>

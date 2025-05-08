@@ -152,8 +152,8 @@ PackitupWindow::PackitupWindow (BaseObjectType *cobject,
   m_refInfoBuffer->set_text (_ (
       "This is our application for how many packs of beer you and your "
       "friends need to buy so you won't be out of beer :)\n\n"
-      "The calculation takes how many people drinks more than moderated, and "
-      "how many drinks alright\n\n"
+      "The calculation takes how many people are above-moderate drinkers, and "
+      "how many are moderate drinkers.\n\n"
       "More than moderated would be more than or equal to 2 packs that "
       "day(12 bottles "
       "of 269ml or 8oz, ~3.0L or ~96oz).\n\n"

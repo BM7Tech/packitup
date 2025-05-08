@@ -1,10 +1,9 @@
-# Pack It UP! - Never run out of beer again.
-# WORK IN PROGRESS
+# ![PackItUp Logo](./src/tech.bm7.packitup.svg) Pack It UP! - Never run out of beer again.
 [![License](https://img.shields.io/badge/License-GPLv3-blue)](./LICENSE)
 [![English](https://img.shields.io/badge/README-en--US-blue)](./README.md)
 [![Português](https://img.shields.io/badge/README-pt--BR-green)](./README.pt-BR.md)
-### ***Packages names might be wrong, still testing*** 
-#### Tested on:
+- This is our application for you and your friends never run out of beer again in your parties/barbecue, etc :)
+## Tested on:
 - [x] Ubuntu/Kubuntu
 - [x] Fedora Workstation/KDE Plasma
 - [x] OpenSUSE Tumbleweed
@@ -21,7 +20,7 @@ At the moment the only way to install is by cloning the repository:
 1. Install [Build prerequisites](#build-prerequisites)
 2. `git clone https://github.com/edu-bm7/packitup`
 3. `cd packitup`
-4. `meson setup builddir`
+4. `meson setup builddir --prefix=/usr`
     - At the moment you could install it with a custom location, but localization packages won't work(Translation packages). 
     - If you wish to do it anyway, run `meson setup --prefix=YOUR_CUSTOM_INSTALL_PATH builddir`
 5. `cd builddir` 

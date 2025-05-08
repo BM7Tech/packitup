@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: packitup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-08 01:39-0300\n"
+"POT-Creation-Date: 2025-04-18 00:22-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,13 +30,13 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/packitup_window.cc:153
+#: src/packitup_window.cc:137
 msgid ""
 "This is our application for how many packs of beer you and your friends need "
 "to buy so you won't be out of beer :)\n"
 "\n"
-"The calculation takes how many people are above-moderate drinkers, and how "
-"many are moderate drinkers.\n"
+"The calculation takes how many people drinks more than moderated, and how "
+"many drinks alright\n"
 "\n"
 "More than moderated would be more than or equal to 2 packs that day(12 "
 "bottles of 269ml or 8oz, ~3.0L or ~96oz).\n"
@@ -48,85 +48,85 @@ msgid ""
 "account localization."
 msgstr ""
 
-#: src/packitup_window.cc:183
+#: src/packitup_window.cc:162
 msgid "Result"
 msgstr ""
 
-#: src/packitup_window.cc:208
+#: src/packitup_window.cc:189
 msgid "Select the values above and click \"Calculate\" to begin..."
 msgstr ""
 
-#: src/packitup_window.cc:491
+#: src/packitup_window.cc:283
 msgid "8oz"
 msgstr ""
 
-#: src/packitup_window.cc:492
+#: src/packitup_window.cc:284
 msgid "11.2oz"
 msgstr ""
 
-#: src/packitup_window.cc:493
+#: src/packitup_window.cc:285
 msgid "11.5oz"
 msgstr ""
 
-#: src/packitup_window.cc:494
+#: src/packitup_window.cc:286
 msgid "12oz"
 msgstr ""
 
-#: src/packitup_window.cc:498 src/window.ui:139
+#: src/packitup_window.cc:290 src/window.ui:141
 msgid "250ml"
 msgstr ""
 
-#: src/packitup_window.cc:499 src/window.ui:140
+#: src/packitup_window.cc:291 src/window.ui:142
 msgid "269ml"
 msgstr ""
 
-#: src/packitup_window.cc:500 src/window.ui:141
+#: src/packitup_window.cc:292 src/window.ui:143
 msgid "330ml"
 msgstr ""
 
-#: src/packitup_window.cc:501 src/window.ui:142
+#: src/packitup_window.cc:293 src/window.ui:144
 msgid "355ml"
 msgstr ""
 
-#: src/packitup_window.cc:560
+#: src/packitup_window.cc:351
 msgid "The total number of packs you might need: "
 msgstr ""
 
-#: src/packitup_window.cc:570 src/packitup_window.cc:599
+#: src/packitup_window.cc:361 src/packitup_window.cc:390
 msgid "%1"
 msgstr ""
 
-#: src/packitup_window.cc:578
+#: src/packitup_window.cc:369
 msgid ""
 "\n"
 "You might need "
 msgstr ""
 
-#: src/packitup_window.cc:585
+#: src/packitup_window.cc:376
 msgid "%1%2"
 msgstr ""
 
-#: src/packitup_window.cc:592
+#: src/packitup_window.cc:383
 msgid " of beer for "
 msgstr ""
 
-#: src/packitup_window.cc:606
+#: src/packitup_window.cc:397
 msgid " people.\n"
 msgstr ""
 
-#: src/packitup_window.cc:608
+#: src/packitup_window.cc:399
 msgid " person.\n"
 msgstr ""
 
-#: src/packitup_window.cc:616
+#: src/packitup_window.cc:407
 msgid "packs"
 msgstr ""
 
-#: src/packitup_window.cc:618
+#: src/packitup_window.cc:409
 msgid "pack"
 msgstr ""
 
-#: src/packitup_window.cc:620
+#: src/packitup_window.cc:411
 msgid "%1 %2 of beer have %3%4."
 msgstr ""
 
@@ -142,75 +142,75 @@ msgstr ""
 msgid "Slide Down"
 msgstr ""
 
-#: src/packitup.cc:133
+#: src/packitup.cc:128
 msgid "Never run out of beer again."
 msgstr ""
 
-#: src/window.ui:24 src/window.ui:31
+#: src/window.ui:24 src/window.ui:33
 msgid "Pack It UP!"
 msgstr ""
 
-#: src/window.ui:57
+#: src/window.ui:59
 msgid "About"
 msgstr ""
 
-#: src/window.ui:75
+#: src/window.ui:77
 msgid "Packs Calculator"
 msgstr ""
 
-#: src/window.ui:97
+#: src/window.ui:99
 msgid "Pack size:"
 msgstr ""
 
-#: src/window.ui:108
+#: src/window.ui:110
 msgid "6"
 msgstr ""
 
-#: src/window.ui:109
+#: src/window.ui:111
 msgid "8"
 msgstr ""
 
-#: src/window.ui:110
+#: src/window.ui:112
 msgid "12"
 msgstr ""
 
-#: src/window.ui:111
+#: src/window.ui:113
 msgid "15"
 msgstr ""
 
-#: src/window.ui:112
+#: src/window.ui:114
 msgid "24"
 msgstr ""
 
-#: src/window.ui:113
+#: src/window.ui:115
 msgid "30"
 msgstr ""
 
-#: src/window.ui:128
+#: src/window.ui:130
 msgid "Beer bottle/can size:"
 msgstr ""
 
-#: src/window.ui:159
-msgid "Above-moderate drinkers:"
+#: src/window.ui:161
+msgid "Drinks more than moderate:"
 msgstr ""
 
-#: src/window.ui:189
-msgid "Moderate drinkers:"
+#: src/window.ui:191
+msgid "Drinks alright:"
 msgstr ""
 
-#: src/window.ui:219
+#: src/window.ui:221
 msgid "Select the Unit:"
 msgstr ""
 
-#: src/window.ui:230
+#: src/window.ui:232
 msgid "Liters"
 msgstr ""
 
-#: src/window.ui:231
+#: src/window.ui:233
 msgid "Ounces"
 msgstr ""
 
-#: src/window.ui:251
+#: src/window.ui:253
 msgctxt "button2"
 msgid "Calculate"
 msgstr ""
