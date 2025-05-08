@@ -167,6 +167,16 @@ jobs:
         run: |
           mv PackItUP*.AppImage artifacts/PackItUP-${{ github.ref_name }}.AppImage
 
+      - name: Upload AppImage as Release asset
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: artifacts/PackItUP-${{ github.ref_name }}.AppImage
+          asset_name: PackItUP-${{ github.ref_name }}.AppImage
+          asset_content_type: application/octet-stream
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
