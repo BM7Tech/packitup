@@ -1,4 +1,4 @@
-# ![PackItUp Logo](./src/icons/hicolor/48x48/apps/tech.bm7.packitup.png) Pack It UP! - Never run out of beer again.
+# ![PackItUp Logo](./src/icons/hicolor/24x24/apps/tech.bm7.packitup.png) Pack It UP! - Never run out of beer again.
 [![License](https://img.shields.io/badge/License-GPLv3-blue)](./LICENSE)
 [![English](https://img.shields.io/badge/README-en--US-blue)](./README.md)
 [![Português](https://img.shields.io/badge/README-pt--BR-green)](./README.pt-BR.md)
@@ -15,32 +15,42 @@ Although the app work in KDE environment, theming it might be tricky and it migh
 ## GNOME/LibAdwaita
 If you want a more adept version of the app for the GNOME Desktop Environment(dark theme support, etc), check it out [PackItUP! - GNOME](https://github.com/BM7Tech/packitup-gnome).
 ## Install
-At the moment the only way to install is by cloning the repository:
+You have two ways of installing our application:
 
+## 1 - Download The AppImage
+- You can just [Download the AppImage](https://github.com/BM7Tech/packitup/releases/download/v1.0.1/PackItUP-v1.0.1.AppImage)
+- Then `chmod +x PackItUP-v1.0.1.AppImage` and either double click the app image to launch it,
+or in your terminal `./Packitup-v1.0.1.AppImage`
+
+## 2 - Build from source
 1. Install [Build prerequisites](#build-prerequisites)
-2. `git clone https://github.com/edu-bm7/packitup`
-3. `cd packitup`
-4. `meson setup builddir --prefix=/usr`
+2. Then [Download Release Source Code](https://github.com/BM7Tech/packitup/releases/download/v1.0.1/packitup-v1.0.1.tar.gz)
+3. `tar xzf packitup-v1.0.1.tar.gz && cd packitup-v1.0.1`
+4. `meson setup build --prefix=/usr`
     - At the moment you could install it with a custom location, but localization packages won't work(Translation packages). 
-    - If you wish to do it anyway, run `meson setup --prefix=YOUR_CUSTOM_INSTALL_PATH builddir`
-5. `cd builddir` 
+    - If you wish to do it anyway, run `meson setup --prefix=YOUR_CUSTOM_INSTALL_PATH build`
+5. `cd build` 
     - Change to the build directory
 6. `ninja`
 7. `sudo ninja install`
 
 ## Uninstall
-To uninstall our program we have a small `uninstall.sh` script that take cares of
-everything. Note that our script takes 2 arguments `--build` or `-b` and 
-`--prefix` or `-p`. The `--prefix` argument is optional, only use it if your PackItUP!
-installation isn't in your PATH(you used --prefix in meson setup and this prefix
-ins't in your PATH). The `--build` argument takes your build folder path(`builddir` in
-our example), relative to where you are launching `uninstall.sh`.
+If you downloaded the `AppImage`, just delete the file and you are done,
+else follow the instructions bellow:
+
+If you downloaded the source code, to uninstall our program we have a small 
+`uninstall.sh` script that take cares of everything. 
+Note that our script takes 2 arguments `--build` or `-b` and `--prefix` or `-p`.
+The `--prefix` argument is optional, only use it if your PackItUP! installation
+isn't in your PATH(you used --prefix in meson setup and this prefix ins't in your PATH).
+The `--build` argument takes your build folder path(`build` in our example),
+relative to where you are launching `uninstall.sh`.
 To uninstall just run:
 ```
-sudo ./uninstall.sh --build builddir
+sudo ./uninstall.sh --build build
 ```
-Where `builddir` is the build directory you specified with `meson setup`.
-You can also just `cd builddir`, then `sudo ninja uninstall` but don't forget to
+Where `build` is the build directory you specified with `meson setup`.
+You can also just `cd build`, then `sudo ninja uninstall` but don't forget to
 update your Gtk icons cache for the correct folder where our application icons were
 installed.
 

@@ -1,5 +1,5 @@
 
-# ![PackItUP! Logo](./src/icons/hicolor/32x32/apps/tech.bm7.packitup.png) Pack It UP! - Nunca mais fique sem cerveja.
+# ![PackItUP! Logo](./src/icons/hicolor/24x24/apps/tech.bm7.packitup.png) Pack It UP! - Nunca mais fique sem cerveja.
 [![License](https://img.shields.io/badge/License-GPLv3-blue)](./LICENSE)
 [![English](https://img.shields.io/badge/README-en--US-blue)](./README.md)
 [![Português](https://img.shields.io/badge/README-pt--BR-green)](./README.pt-BR.md)
@@ -21,33 +21,44 @@ Apesar do aplicativo funcionar no ambiente Desktop KDE, mudar a aparência da ap
 Caso você queira uma versão mais adequada ao Ambiente Desktop GNOME (suporte ao tema escuro, etc), veja [PackItUP! - GNOME](https://github.com/BM7Tech/packitup-gnome).
 
 ## Instalar
-No momento a única maneira de instalar o nosso programa é clonando o repositório:
+Há duas maneiras de instalar nosso aplicativo:
 
+## 1 - Baixar a AppImage
+- Você pode pode simplesmente [Baixar a AppImage](https://github.com/BM7Tech/packitup/releases/download/v1.0.1/PackItUP-v1.0.1.AppImage)
+- Depois no seu terminal na pasta em que baixou a AppImage`chmod +x PackItUP-v1.0.1.AppImage`,
+podendo iniciar o aplicativo clicando duas vezes na AppImage ou no terminal `./PackItUP-v1.0.1.AppImage`
+
+
+## 2 - Compilar direto do código fonte
 1. Instale as [Dependências de compilação](#build-prerequisites)
-2. `git clone https://github.com/edu-bm7/packitup`
-3. `cd packitup`
-4. `meson setup builddir --prefix=/usr`
+2. [Baixe o Código Fonte](https://github.com/BM7Tech/packitup/releases/download/v1.0.1/packitup-v1.0.1.tar.gz)
+3. `tar xzf packitup-v1.0.1.tar.gz && cd packitup-v1.0.1`
+4. `meson setup build --prefix=/usr`
     - Caso queira, você pode escolher um diretório customizado para instalação, porém, os pacotes de tradução não irão funcionar. 
-    - Se quiser fazê-lo mesmo assim, `meson setup --prefix=SEU_DIRETORIO builddir`
-5. `cd builddir`
+    - Se quiser fazê-lo mesmo assim, `meson setup --prefix=SEU_DIRETORIO build`
+5. `cd build`
     - Mude para o diretório onde será feito a compilação
 6. `ninja`
 7. `sudo ninja install`
 
 ## Desinstalar
-Para desinstalar nosso programa temos um pequeno script `uninstall.sh` que cuida
-de todo o processo. Nosso script recebe 2 argumentos `--build` ou `-b`, e `--prefix` ou
-`-p`. O argumento `--prefix` é opicional, só o utilize caso sua instalação do PackItUP!
+Caso você tenha baixado a `AppImage`, apenas exclua o arquivo e o programa já 
+estará desisntalado. Caso tenha baixado o código fonte, siga as instruções abaixo:
+
+Para aqueles que baixaram o código fonte, temos um pequeno script `uninstall.sh` 
+que cuida de todo o processo de desinstalação.
+Nosso script recebe 2 argumentos `--build` ou `-b`, e `--prefix` ou `-p`. 
+O argumento `--prefix` é opicional, só o utilize caso sua instalação do PackItUP!
 não estaja em seu PATH(você utilizou --prefix quando configurou o meson e esse prefixo não
 existe no seu PATH). O argumento `--build` recebe o caminho para a sua pasta de compilação
 (`builddir` no nosso exemplo), o caminho é relativo ao local em que você está 
 executando `uninstall.sh`.
 Para desinstalar simplesmente execute:
 ```
-sudo ./uninstall.sh --build builddir
+sudo ./uninstall.sh --build build
 ```
-Onde `builddir` é o diretório em que você especificou em `meson setup`. 
-Você também pode simplesmente `cd builddir`, e `sudo ninja uninstall`, porém
+Onde `build` é o diretório em que você especificou em `meson setup`. 
+Você também pode simplesmente `cd build`, e `sudo ninja uninstall`, porém
 não se esqueça de atualizar seu cache dos ícones Gtk para a pasta correta em que
 os ícones do nosso aplicativo foi instalado.
 
