@@ -1,4 +1,4 @@
-# ![PackItUp Logo](./src/tech.bm7.packitup.svg) Pack It UP! - Never run out of beer again.
+# ![PackItUp Logo](./src/icons/hicolor/48x48/apps/tech.bm7.packitup.png) Pack It UP! - Never run out of beer again.
 [![License](https://img.shields.io/badge/License-GPLv3-blue)](./LICENSE)
 [![English](https://img.shields.io/badge/README-en--US-blue)](./README.md)
 [![Português](https://img.shields.io/badge/README-pt--BR-green)](./README.pt-BR.md)

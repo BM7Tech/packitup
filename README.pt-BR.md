@@ -1,5 +1,5 @@
 
-# ![PackItUP! Logo](./src/tech.bm7.packitup.svg) Pack It UP! - Nunca mais fique sem cerveja.
+# ![PackItUP! Logo](./src/icons/hicolor/48x48/apps/tech.bm7.packitup.png) Pack It UP! - Nunca mais fique sem cerveja.
 [![License](https://img.shields.io/badge/License-GPLv3-blue)](./LICENSE)
 [![English](https://img.shields.io/badge/README-en--US-blue)](./README.md)
 [![Português](https://img.shields.io/badge/README-pt--BR-green)](./README.pt-BR.md)
