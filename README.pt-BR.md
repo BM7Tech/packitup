@@ -1,5 +1,6 @@
+<h1 align="center"> <img src="https://raw.githubusercontent.com/BM7Tech/packitup/master/src/icons/hicolor/64x64/apps/tech.bm7.packitup.png" alt="PackItUP"> Pack It UP! <p> Nunca mais fique sem cerveja.</p> 
+</h1>
 
-# ![PackItUP! Logo](./src/icons/hicolor/24x24/apps/tech.bm7.packitup.png) Pack It UP! - Nunca mais fique sem cerveja.
 [![License](https://img.shields.io/badge/License-GPLv3-blue)](./LICENSE)
 [![English](https://img.shields.io/badge/README-en--US-blue)](./README.md)
 [![Português](https://img.shields.io/badge/README-pt--BR-green)](./README.pt-BR.md)
