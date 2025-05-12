@@ -1,5 +1,4 @@
 #!/bin/env bash
-set -e
 
 uninstall_packitup()
 {
