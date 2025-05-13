@@ -25,7 +25,7 @@ jobs:
             mingw-w64-ucrt-x86_64-toolchain
             mingw-w64-ucrt-x86_64-binutils
             mingw-w64-ucrt-x86_64-gtk4
-            mingw-w64-ucrt-x86_64-gtkmm4
+            mingw-w64-ucrt-x86_64-gtkmm-4.0
             mingw-w64-ucrt-x86_64-python
             mingw-w64-ucrt-x86_64-glib2
             mingw-w64-ucrt-x86_64-pkg-config
@@ -35,10 +35,6 @@ jobs:
             mingw-w64-ucrt-x86_64-meson
             mingw-w64-ucrt-x86_64-ninja
             mingw-w64-ucrt-x86_64-gdb
-            mingw-w64-ucrt-x86_64-gtk4-debug
-            mingw-w64-ucrt-x86_64-gtkmm4-debug
-            mingw-w64-ucrt-x86_64-glib2-debug
-            mingw-w64-ucrt-x86_64-python-debug
 
       - name: Fix archiver name
         run: |
