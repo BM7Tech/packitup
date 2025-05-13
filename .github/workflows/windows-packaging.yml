@@ -34,6 +34,7 @@ jobs:
             mingw-w64-ucrt-x86_64-nsis
             mingw-w64-ucrt-x86_64-meson
             mingw-w64-ucrt-x86_64-ninja
+            mingw-w64-ucrt-x86_64-gdb
 
       - name: Fix archiver name
         run: |
@@ -41,7 +42,7 @@ jobs:
 
       - name: Configure & build
         run: |
-          meson setup build-win --cross-file=ci/windows-cross.txt
+          meson setup build-win --cross-file=ci/windows-cross.txt --buildtype=debug
           ninja -C build-win
 
       - name: Collect DLLs
@@ -53,6 +54,25 @@ jobs:
           cp build-win/src/packitup-real.exe dist/bin/
           cp packitup.ico dist/
           cp /ucrt64/bin/*.dll dist/
+
+      - name: Run GDB for debugging windows app
+        shell: msys2 {0}
+        continue-on-error: true
+        run: |
+          gdb -batch \
+              -ex "set loggin file backtrace.log" \
+              -ex "set loggin on" \
+              -ex "file dist/bin/packitup.exe" \
+              -ex "run" \
+              -ex "bt full" \
+              -ex "quit"
+
+      - name: Upload GDB backtrace
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: gdb-backtrace
+          path: backtrace.log
 
       - name: Compile GSettings schemas
         run: |
