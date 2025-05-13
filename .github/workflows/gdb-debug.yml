@@ -1,0 +1,78 @@
+name: Windows Packaging
+
+on:
+  release:
+    types: [published]    # fires only when you publish a Release in GitHub
+  workflow_dispatch:      # optional: allows manual reruns from the Actions UI
+
+jobs:
+  msys2-ucrt64:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up MSYS2 UCRT64
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+          install: |
+            mingw-w64-ucrt-x86_64-toolchain
+            mingw-w64-ucrt-x86_64-binutils
+            mingw-w64-ucrt-x86_64-gtk4
+            mingw-w64-ucrt-x86_64-gtkmm4
+            mingw-w64-ucrt-x86_64-python
+            mingw-w64-ucrt-x86_64-glib2
+            mingw-w64-ucrt-x86_64-pkg-config
+            mingw-w64-ucrt-x86_64-gettext-tools
+            mingw-w64-ucrt-x86_64-libxml2
+            mingw-w64-ucrt-x86_64-nsis
+            mingw-w64-ucrt-x86_64-meson
+            mingw-w64-ucrt-x86_64-ninja
+            mingw-w64-ucrt-x86_64-gdb
+
+      - name: Fix archiver name
+        run: |
+          ln -s "$(which ar)" /ucrt64/bin/x86_64-w64-mingw32-ar.exe
+
+      - name: Configure & build
+        run: |
+          meson setup build-win --cross-file=ci/windows-cross.txt --buildtype=debug -Dc_args="-fno-omit-frame-pointer" \
+                     -Dcpp_args="-fno-omit-frame-pointer"
+          ninja -C build-win
+
+      - name: Collect DLLs
+        run: |
+          rm -rf dist
+          mkdir -p dist
+          mkdir -p dist/bin
+          cp build-win/src/packitup.exe dist/bin/
+          cp build-win/src/packitup-real.exe dist/bin/
+          cp packitup.ico dist/
+          cp /ucrt64/bin/*.dll dist/
+
+      - name: Run GDB for debugging windows app
+        shell: msys2 {0}
+        continue-on-error: true
+        run: |
+          gdb -batch \
+              -ex "set loggin file backtrace.log" \
+              -ex "set loggin on" \
+              -ex "handle SIGABRT stop print pass" \
+              -ex "break abort" \
+              -ex "file dist/bin/packitup.exe" \
+              -ex "run" \
+              -ex "bt full" \
+              -ex "quit"
+
+      - name: Upload GDB backtrace
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: gdb-backtrace
+          path: backtrace.log
