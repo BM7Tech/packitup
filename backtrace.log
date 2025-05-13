@@ -1,0 +1,10 @@
+No symbol table is loaded.  Use the "file" command.
+Make breakpoint pending on future shared library load? (y or [n]) [answered N; input not from terminal]
+[New Thread 6020.0xe7c]
+[New Thread 6020.0xf34]
+[New Thread 6020.0x17e0]
+[Thread 6020.0xf34 exited with code 3221226505]
+[Thread 6020.0xe7c exited with code 3221226505]
+[Thread 6020.0x17e0 exited with code 3221226505]
+[Inferior 1 (process 6020) exited with code 030000002011]
+No stack.

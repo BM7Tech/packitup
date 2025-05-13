@@ -35,6 +35,10 @@ jobs:
             mingw-w64-ucrt-x86_64-meson
             mingw-w64-ucrt-x86_64-ninja
             mingw-w64-ucrt-x86_64-gdb
+            mingw-w64-ucrt-x86_64-gtk4-debug
+            mingw-w64-ucrt-x86_64-gtkmm4-debug
+            mingw-w64-ucrt-x86_64-glib2-debug
+            mingw-w64-ucrt-x86_64-python-debug
 
       - name: Fix archiver name
         run: |
@@ -59,15 +63,20 @@ jobs:
       - name: Run GDB for debugging windows app
         shell: msys2 {0}
         continue-on-error: true
+        env:
+          GSETTINGS_SCHEMA_DIR: ${{ github.workspace }}/dist/share/glib-2.0/schemas
+          PATH: ${{ github.workspace }}/dist/bin:/ucrt64/bin:$PATH
+          G_MESSAGES_DEBUG: all
         run: |
           gdb -batch \
               -ex "set loggin file backtrace.log" \
               -ex "set loggin on" \
-              -ex "handle SIGABRT stop print pass" \
-              -ex "break abort" \
+              -ex "handle SIGABRT SIGSEGV stop print pass" \
+              -ex "break _security_check_cookie" \
               -ex "file dist/bin/packitup.exe" \
               -ex "run" \
               -ex "bt full" \
+              -ex "thread apply all bt full" \
               -ex "quit"
 
       - name: Upload GDB backtrace
