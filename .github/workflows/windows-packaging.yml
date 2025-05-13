@@ -63,7 +63,7 @@ jobs:
               -ex "set loggin file backtrace.log" \
               -ex "set loggin on" \
               -ex "handle SIGSEGV stop print pass" \
-              -ex "catch throw"
+              -ex "catch throw" \
               -ex "file dist/bin/packitup.exe" \
               -ex "run" \
               -ex "bt full" \
