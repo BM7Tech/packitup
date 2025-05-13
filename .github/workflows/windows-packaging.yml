@@ -62,8 +62,8 @@ jobs:
           gdb -batch \
               -ex "set loggin file backtrace.log" \
               -ex "set loggin on" \
-              -ex "handle SIGSEGV stop print pass" \
-              -ex "catch throw" \
+              -ex "handle SIGABRT stop print pass" \
+              -ex "break __security_check_cookie_fail" \
               -ex "file dist/bin/packitup.exe" \
               -ex "run" \
               -ex "bt full" \
