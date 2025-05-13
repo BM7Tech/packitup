@@ -1,4 +1,4 @@
-name: Windows Packaging
+name: Debugging Windows Binary
 
 on:
   release:
