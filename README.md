@@ -20,14 +20,14 @@ If you want a more adept version of the app for the GNOME Desktop Environment(da
 You have two ways of installing our application:
 
 ## 1 - Download The AppImage
-- You can just [Download the AppImage](https://github.com/BM7Tech/packitup/releases/download/v1.0.1/PackItUP-v1.0.1.AppImage)
-- Then `chmod +x PackItUP-v1.0.1.AppImage` and either double click the app image to launch it,
-or in your terminal `./Packitup-v1.0.1.AppImage`
+- You can just [Download the AppImage](https://github.com/BM7Tech/packitup/releases/download/v1.0.2/PackItUP-v1.0.2.AppImage)
+- Then `chmod +x PackItUP-v1.0.2.AppImage` and either double click the app image to launch it,
+or in your terminal `./Packitup-v1.0.2.AppImage`
 
 ## 2 - Build from source
 1. Install [Build prerequisites](#build-prerequisites)
-2. Then [Download Release Source Code](https://github.com/BM7Tech/packitup/releases/download/v1.0.1/packitup-v1.0.1.tar.gz)
-3. `tar xzf packitup-v1.0.1.tar.gz && cd packitup-v1.0.1`
+2. Then [Download Release Source Code](https://github.com/BM7Tech/packitup/releases/download/v1.0.2/packitup-v1.0.2.tar.gz)
+3. `tar xzf packitup-v1.0.2.tar.gz && cd packitup-v1.0.2`
 4. `meson setup build --prefix=/usr`
     - At the moment you could install it with a custom location, but localization packages won't work(Translation packages). 
     - If you wish to do it anyway, run `meson setup --prefix=YOUR_CUSTOM_INSTALL_PATH build`

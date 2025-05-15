@@ -25,15 +25,15 @@ Caso você queira uma versão mais adequada ao Ambiente Desktop GNOME (suporte a
 Há duas maneiras de instalar nosso aplicativo:
 
 ## 1 - Baixar a AppImage
-- Você pode pode simplesmente [Baixar a AppImage](https://github.com/BM7Tech/packitup/releases/download/v1.0.1/PackItUP-v1.0.1.AppImage)
-- Depois no seu terminal na pasta em que baixou a AppImage`chmod +x PackItUP-v1.0.1.AppImage`,
-podendo iniciar o aplicativo clicando duas vezes na AppImage ou no terminal `./PackItUP-v1.0.1.AppImage`
+- Você pode pode simplesmente [Baixar a AppImage](https://github.com/BM7Tech/packitup/releases/download/v1.0.2/PackItUP-v1.0.2.AppImage)
+- Depois no seu terminal na pasta em que baixou a AppImage`chmod +x PackItUP-v1.0.2.AppImage`,
+podendo iniciar o aplicativo clicando duas vezes na AppImage ou no terminal `./PackItUP-v1.0.2.AppImage`
 
 
 ## 2 - Compilar direto do código fonte
 1. Instale as [Dependências de compilação](#build-prerequisites)
-2. [Baixe o Código Fonte](https://github.com/BM7Tech/packitup/releases/download/v1.0.1/packitup-v1.0.1.tar.gz)
-3. `tar xzf packitup-v1.0.1.tar.gz && cd packitup-v1.0.1`
+2. [Baixe o Código Fonte](https://github.com/BM7Tech/packitup/releases/download/v1.0.2/packitup-v1.0.2.tar.gz)
+3. `tar xzf packitup-v1.0.2.tar.gz && cd packitup-v1.0.2`
 4. `meson setup build --prefix=/usr`
     - Caso queira, você pode escolher um diretório customizado para instalação, porém, os pacotes de tradução não irão funcionar. 
     - Se quiser fazê-lo mesmo assim, `meson setup --prefix=SEU_DIRETORIO build`
