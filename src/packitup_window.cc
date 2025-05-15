@@ -149,18 +149,19 @@ PackitupWindow::PackitupWindow (BaseObjectType *cobject,
   m_refSettings = Gio::Settings::create ("tech.bm7.packitup");
   auto m_refTagInfoFont = m_refInfoBuffer->create_tag ();
   m_refSettings->bind ("font", m_refTagInfoFont->property_font ());
-  m_refInfoBuffer->set_text (_ (
-      "This is our application for how many packs of beer you and your "
-      "friends need to buy so you won't be out of beer :)\n\n"
-      "The calculation takes how many people are above-moderate drinkers, and "
-      "how many are moderate drinkers.\n\n"
-      "More than moderated would be more than or equal to 2 packs that "
-      "day(12 bottles "
-      "of 269ml or 8oz, ~3.0L or ~96oz).\n\n"
-      "Keep in mind that in order to not let you go out of beer this "
-      "calculation will round up the amount of packs needed.\n\n"
-      "The values in Liters and Ounces aren't direct convertable. It takes "
-      "into account localization."));
+  m_refInfoBuffer->set_text (
+      _ ("This is our application for how many packs of beer you and your "
+         "friends need to buy so you won't be out of beer :)\n\n"
+         "The calculation takes how many people are heavy drinkers, and "
+         "how many are moderate drinkers.\n\n"
+         "Heavy drinkers would be those who drinks more than or equal to 2 "
+         "packs that "
+         "day(24 bottles "
+         "of 355ml/12oz, ~8.5L/~288oz).\n\n"
+         "Keep in mind that in order to not let you go out of beer this "
+         "calculation will round up the amount of packs needed.\n\n"
+         "The values in Liters and Ounces aren't direct convertable. It takes "
+         "into account localization."));
   m_refInfoBuffer->apply_tag (m_refTagInfoFont, m_refInfoBuffer->begin (),
                               m_refInfoBuffer->end ());
 
@@ -529,7 +530,7 @@ PackitupWindow::on_result_changed ()
           = std::stof (m_refBottleSizeList->get_string (single_bottle_idx));
       auto pack_size
           = std::stoi (m_refPackSizeList->get_string (pack_size_idx));
-
+      bool is_liter = false;
       // Set the Unit to use
       if (unit_idx > 0)
         m_unit = "oz";
@@ -537,19 +538,28 @@ PackitupWindow::on_result_changed ()
         {
           m_unit = "L";
           single_bottle /= 1000;
+          is_liter = true;
         }
 
       // Calculate the number of packs for that day they will have to buy
       auto pack = single_bottle * pack_size;
       float pack_size_max_value;
-      if (pack > 1.5)
-        pack_size_max_value = 1.5;
+      // we lock the total pack size into 12 bottles because the numbers for a
+      // heavy drinker in Brazil is of ~8L/week
+      if (is_liter)
+        pack_size_max_value = 8.52;
       else
-        pack_size_max_value = pack;
-      m_amountOfBeer = ((more_Value * 2 * pack_size_max_value)
-                        + more_Value * single_bottle)
-                       + (pack_size_max_value * alright_Value
-                          + (alright_Value * 2 * single_bottle));
+        pack_size_max_value = 288;
+      float heavy_drinkers_amount
+          = (more_Value * pack_size_max_value) + more_Value * single_bottle;
+      // We multiply by 0.5 because the numbers for Brazil
+      // Is that a moderate drinker drinks ~3L/week
+      // So we consider that an avarage person probably won't
+      // drink a whole pack.
+      float moderate_drinkers_amount
+          = (pack_size_max_value * alright_Value * 0.5)
+            + (alright_Value * 2 * single_bottle);
+      m_amountOfBeer = heavy_drinkers_amount + moderate_drinkers_amount;
       m_numberOfPacks = std::ceil (m_amountOfBeer / pack);
       m_amountOfBeerPacks = pack * m_numberOfPacks;
       // The total number of people that will consume that amount of beer

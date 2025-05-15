@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: packitup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-08 01:39-0300\n"
-"PO-Revision-Date: 2025-05-08 01:59-0300\n"
+"POT-Creation-Date: 2025-05-15 01:33-0300\n"
+"PO-Revision-Date: 2025-05-15 01:39-0300\n"
 "Last-Translator: edubm7@bm7.tech\n"
 "Language-Team: Brazilian Portuguese <ldpbr-"
 "translation@lists.sourceforge.net>\n"
@@ -37,11 +37,11 @@ msgid ""
 "This is our application for how many packs of beer you and your friends need "
 "to buy so you won't be out of beer :)\n"
 "\n"
-"The calculation takes how many people are above-moderate drinkers, and how "
-"many are moderate drinkers.\n"
+"The calculation takes how many people are heavy drinkers, and how many are "
+"moderate drinkers.\n"
 "\n"
-"More than moderated would be more than or equal to 2 packs that day(12 "
-"bottles of 269ml or 8oz, ~3.0L or ~96oz).\n"
+"Heavy drinkers would be those who drinks more than or equal to 2 packs that "
+"day(24 bottles of 355ml/12oz, ~8.5L/~288oz).\n"
 "\n"
 "Keep in mind that in order to not let you go out of beer this calculation "
 "will round up the amount of packs needed.\n"
@@ -52,11 +52,11 @@ msgstr ""
 "Esse é o nosso aplicativo para calcular quantos engradados de cerveja você e "
 "seus amigos precisam comprar para não faltar cerveja :)\n"
 "\n"
-"O cálculo considera quantas pessoa bebem mais que moderado e quantas bebem "
+"O cálculo considera quantas pessoa bebem bastante e quantas bebem "
 "moderadamente.\n"
 "\n"
-"Mais que moderado seria maior ou igual a 2 engradados no dado dia (12 latas "
-"de 269ml ou 8oz, ~3.0L ou ~96oz).\n"
+"Beber bastante seria pessoas que bebem mais que ou igual a 2 engradados no "
+"dado dia (24 latas de 355ml/8oz, ~8.5L/~288oz).\n"
 "\n"
 "Tenha em mente que para que não o falte cerveja, esse cálculo vai arredondar "
 "para cima o número de engradados necessários.\n"
@@ -64,55 +64,55 @@ msgstr ""
 "Os valores em Litros e Onças não podem ser convertidos diretamente. Eles "
 "estão considerando regionalidade."
 
-#: src/packitup_window.cc:183
+#: src/packitup_window.cc:184
 msgid "Result"
 msgstr "Resultado"
 
-#: src/packitup_window.cc:208
+#: src/packitup_window.cc:209
 msgid "Select the values above and click \"Calculate\" to begin..."
 msgstr "Selecione os valores acima e clique em \"Calcular\" para começar..."
 
-#: src/packitup_window.cc:491
+#: src/packitup_window.cc:492
 msgid "8oz"
 msgstr "8oz"
 
-#: src/packitup_window.cc:492
+#: src/packitup_window.cc:493
 msgid "11.2oz"
 msgstr "11.2oz"
 
-#: src/packitup_window.cc:493
+#: src/packitup_window.cc:494
 msgid "11.5oz"
 msgstr "11.5oz"
 
-#: src/packitup_window.cc:494
+#: src/packitup_window.cc:495
 msgid "12oz"
 msgstr "12oz"
 
-#: src/packitup_window.cc:498 src/window.ui:139
+#: src/packitup_window.cc:499 src/window.ui:139
 msgid "250ml"
 msgstr "250ml"
 
-#: src/packitup_window.cc:499 src/window.ui:140
+#: src/packitup_window.cc:500 src/window.ui:140
 msgid "269ml"
 msgstr "269ml"
 
-#: src/packitup_window.cc:500 src/window.ui:141
+#: src/packitup_window.cc:501 src/window.ui:141
 msgid "330ml"
 msgstr "330ml"
 
-#: src/packitup_window.cc:501 src/window.ui:142
+#: src/packitup_window.cc:502 src/window.ui:142
 msgid "355ml"
 msgstr "355ml"
 
-#: src/packitup_window.cc:560
+#: src/packitup_window.cc:570
 msgid "The total number of packs you might need: "
 msgstr "O número total de engradados que você pode precisar é: "
 
-#: src/packitup_window.cc:570 src/packitup_window.cc:599
+#: src/packitup_window.cc:580 src/packitup_window.cc:609
 msgid "%1"
 msgstr "%1"
 
-#: src/packitup_window.cc:578
+#: src/packitup_window.cc:588
 msgid ""
 "\n"
 "You might need "
@@ -120,31 +120,31 @@ msgstr ""
 "\n"
 "Você pode precisar de "
 
-#: src/packitup_window.cc:585
+#: src/packitup_window.cc:595
 msgid "%1%2"
 msgstr "%1%2"
 
-#: src/packitup_window.cc:592
+#: src/packitup_window.cc:602
 msgid " of beer for "
 msgstr " de cerveja para "
 
-#: src/packitup_window.cc:606
+#: src/packitup_window.cc:616
 msgid " people.\n"
 msgstr " pessoas.\n"
 
-#: src/packitup_window.cc:608
+#: src/packitup_window.cc:618
 msgid " person.\n"
 msgstr " pessoa.\n"
 
-#: src/packitup_window.cc:616
+#: src/packitup_window.cc:626
 msgid "packs"
 msgstr "engradados"
 
-#: src/packitup_window.cc:618
+#: src/packitup_window.cc:628
 msgid "pack"
 msgstr "engradado"
 
-#: src/packitup_window.cc:620
+#: src/packitup_window.cc:630
 msgid "%1 %2 of beer have %3%4."
 msgstr "%1 %2 de cerveja têm %3%4."
 
@@ -209,16 +209,16 @@ msgid "Beer bottle/can size:"
 msgstr "Tamanho da garrafa/lata:"
 
 #: src/window.ui:159
-msgid "Above-moderate drinkers:"
-msgstr "Bebem mais que moderado:"
+msgid "Heavy drinkers:"
+msgstr "Bebem bastante:"
 
 #: src/window.ui:189
 msgid "Moderate drinkers:"
 msgstr "Bebem moderadamente:"
 
 #: src/window.ui:219
-msgid "Select the Unit:"
-msgstr "Selecione a unidade:"
+msgid "Select the unit:"
+msgstr "Selecione a unidade de medida:"
 
 #: src/window.ui:230
 msgid "Liters"
