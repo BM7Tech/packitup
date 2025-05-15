@@ -1,4 +1,4 @@
-name: Linux Packaging
+name: Source Code Packaging
 
 on:
   release:
